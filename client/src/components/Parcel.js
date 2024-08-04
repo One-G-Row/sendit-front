@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "./Navbar";
 
-function LoginUser() {
+function Parcel() {
   return (
-    <div>
+    <div className="parcel">
       <Navbar />
-      <h1>Login User</h1>
+      <h1>Parcel</h1>
     </div>
   );
 }
 
-export default LoginUser;
+export default Parcel;

@@ -5,6 +5,7 @@ function LoginAdmin() {
   return (
     <div>
       <Navbar />
+      <h1>Login Admin</h1>
     </div>
   );
 }

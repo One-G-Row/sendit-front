@@ -5,6 +5,7 @@ function SignupAdmin() {
   return (
     <div>
       <Navbar />
+      <h1>Signup Admin</h1>
     </div>
   );
 }
