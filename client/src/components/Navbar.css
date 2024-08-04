@@ -1,7 +1,9 @@
+/* styling navbar links */
 .navbar ul li {
-  display: inline-flex; 
+  display: inline-flex;
   list-style-type: none;
   text-decoration: none;
-  padding: 10px;
-
+  padding: 20px;
+  position: relative;
+  left: 20vh;
 }
