@@ -14,13 +14,13 @@ function App() {
     <div className="App">
       <main>
         <Routes>
-          <Route path="/" component={Homepage} />
-          <Route path="/loginadmin" component={LoginAdmin} />
-          <Route path="/loginuser" component={LoginUser} />
-          <Route path="/navbar" component={Navbar} />
-          <Route path="/signupadmin" component={SignupAdmin} />
-          <Route path="/signupuser" component={SignupUser} />
-          <Route path="/userform" component={UserForm} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/loginadmin" element={<LoginAdmin />} />
+          <Route path="/loginuser" element={<LoginUser />} />
+          <Route path="/navbar" element={<Navbar />} />
+          <Route path="/signupadmin" element={<SignupAdmin />} />
+          <Route path="/signupuser" element={<SignupUser />} />
+          <Route path="/userform" element={<UserForm />} />
         </Routes>
       </main>
     </div>
