@@ -5,6 +5,7 @@ function SignupUser() {
   return (
     <div>
       <Navbar />
+      <h1>Signup User</h1>
     </div>
   );
 }

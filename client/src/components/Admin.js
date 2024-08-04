@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "./Navbar";
 
-function LoginUser() {
+function Admin() {
   return (
-    <div>
+    <div className="admin">
       <Navbar />
-      <h1>Login User</h1>
+      <h1>Admin</h1>
     </div>
   );
 }
 
-export default LoginUser;
+export default Admin;

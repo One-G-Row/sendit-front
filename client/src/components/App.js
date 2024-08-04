@@ -7,7 +7,10 @@ import LoginUser from "./LoginUser";
 import Navbar from "./Navbar";
 import SignupAdmin from "./SignupAdmin";
 import SignupUser from "./SignupUser";
-import UserForm from "./UserForm";
+import Admin from "./Admin";
+import Destination from "./Destination";
+import Parcel from "./Parcel";
+import User from "./User";
 
 function App() {
   return (
@@ -15,12 +18,15 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/navbar" element={<Navbar />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/destination" element={<Destination />} />
+          <Route path="/parcel" element={<Parcel />} />
           <Route path="/loginadmin" element={<LoginAdmin />} />
           <Route path="/loginuser" element={<LoginUser />} />
-          <Route path="/navbar" element={<Navbar />} />
           <Route path="/signupadmin" element={<SignupAdmin />} />
           <Route path="/signupuser" element={<SignupUser />} />
-          <Route path="/userform" element={<UserForm />} />
+          <Route path="/user" element={<User />} />
         </Routes>
       </main>
     </div>

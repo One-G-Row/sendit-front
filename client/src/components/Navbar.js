@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { Nav, NavDropdown } from "react-bootstrap";
 import "./Navbar.css";
 
 function Navbar() {
@@ -7,22 +8,39 @@ function Navbar() {
     <nav className="navbar">
       <ul>
         <li>
-        <NavLink to="/">Home</NavLink>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li>
-        <NavLink to="/loginadmin">Login Admin</NavLink>
+          <NavLink to="/user">User</NavLink>
         </li>
         <li>
-        <NavLink to="/loginuser">Login User</NavLink>
+          <NavLink to="/admin">Admin</NavLink>
         </li>
         <li>
-        <NavLink to="/signupadmin">SignUp Admin</NavLink>
+          <NavLink to="/parcel">Parcels</NavLink>
         </li>
         <li>
-        <NavLink to="/signupuser">SignUp User</NavLink>
+          <NavLink to="/destination">Destination</NavLink>
         </li>
         <li>
-        <NavLink to="/userform">User Form</NavLink>
+          <NavDropdown title="Login">
+            <NavDropdown.Item as={NavLink} to="/loginadmin">
+              Login Admin
+            </NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to="/loginuser">
+              Login User
+            </NavDropdown.Item>
+          </NavDropdown>
+        </li>
+        <li>
+          <NavDropdown title="Signup">
+            <NavDropdown.Item as={NavLink} to="/signupadmin">
+              Signup Admin
+            </NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to="/signupuser">
+              Signup User
+            </NavDropdown.Item>
+          </NavDropdown>
         </li>
       </ul>
     </nav>
