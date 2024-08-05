@@ -1,7 +1,21 @@
-.navbar ul li {
-  display: inline-flex; 
-  list-style-type: none;
-  text-decoration: none;
-  padding: 10px;
+.navbar ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
+.navbar ul li {
+  display: inline-flex;
+  padding: 10px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: inherit; /* Adjust this to match your design */
+}
+
+.navbar ul li a.active {
+  font-weight: bold;
+  /* Add any additional styling for active links */
 }
