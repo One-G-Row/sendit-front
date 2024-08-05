@@ -1,36 +1,49 @@
 .homepage {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100vh; /* Full viewport height */
-  padding: 20px;
-  background-color: #f0f0f0; /* Background color of your choice */
-}
-
-.homepage-content {
-  text-align: right;
-}
-
-.welcome-message {
-  font-size: 2.5rem; /* Large font size */
-  margin-bottom: 10px;
-}
-
-.sub-message {
-  font-size: 1.25rem; /* Slightly smaller font size */
-  margin-bottom: 20px;
-}
-
-.send-parcel-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #007bff; /* Button color */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.send-parcel-button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
-}
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 20px; /* Adjust padding to fit the content */
+  }
+  
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f9fa; /* Adjust to fit your design */
+    z-index: 1000; /* Ensure it's on top of other content */
+  }
+  
+  .content {
+    margin-top: 60px; /* Adjust margin to account for Navbar height */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+  }
+  
+  .title {
+    font-size: 3rem; /* Large font size for the welcome message */
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem; /* Slightly smaller font size for the subtitle */
+    margin-bottom: 20px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Adjust to fit your design */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+  }
+  
