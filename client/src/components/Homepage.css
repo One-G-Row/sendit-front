@@ -1,0 +1,29 @@
+.homepage {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .homepage-header {
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+  }
+  
+  .homepage-content {
+    margin-top: 20px;
+  }
+  
+  .homepage-content h2 {
+    font-size: 24px;
+  }
+  
+  .homepage-content ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .homepage-content ul li {
+    font-size: 18px;
+    padding: 5px 0;
+  }
+  
