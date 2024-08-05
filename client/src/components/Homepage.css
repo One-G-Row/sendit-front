@@ -1,42 +1,33 @@
 .homepage {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Center content horizontally */
     justify-content: center;
-    height: 100vh;
-    padding: 0 20px; /* Adjust padding to fit the content */
-  }
-  
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #f8f9fa; /* Adjust to fit your design */
-    z-index: 1000; /* Ensure it's on top of other content */
+    min-height: 100vh;
+    padding-top: 60px; /* Space for the fixed Navbar */
+    padding-left: 20px; /* Align content */
   }
   
   .content {
-    margin-top: 60px; /* Adjust margin to account for Navbar height */
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
+    align-items: flex-start; /* Align content to the left */
+    text-align: left;
   }
   
   .title {
-    font-size: 3rem; /* Large font size for the welcome message */
+    font-size: 3rem;
     margin-bottom: 10px;
   }
   
   .subtitle {
-    font-size: 1.5rem; /* Slightly smaller font size for the subtitle */
+    font-size: 1.5rem;
     margin-bottom: 20px;
   }
   
   .button {
     padding: 10px 20px;
-    background-color: #007bff; /* Adjust to fit your design */
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -44,6 +35,6 @@
   }
   
   .button:hover {
-    background-color: #0056b3; /* Darker shade for hover effect */
+    background-color: #0056b3;
   }
   
