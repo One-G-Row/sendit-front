@@ -23,6 +23,9 @@ function Navbar() {
           <NavLink to="/destination">Destination</NavLink>
         </li>
         <li>
+          <NavLink to="/locations">Map</NavLink>
+        </li>
+        <li>
           <NavDropdown title="Login">
             <NavDropdown.Item as={NavLink} to="/loginadmin">
               Login Admin

@@ -11,6 +11,7 @@ import Admin from "./Admin";
 import Destination from "./Destination";
 import Parcel from "./Parcel";
 import User from "./User";
+import MapComponent from "./Map";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/signupadmin" element={<SignupAdmin />} />
           <Route path="/signupuser" element={<SignupUser />} />
           <Route path="/user" element={<User />} />
+          <Route path="/map" element={<MapComponent />} />
         </Routes>
       </main>
     </div>
