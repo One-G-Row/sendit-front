@@ -1,12 +1,10 @@
 import React from "react";
-import "./Homepage.css"; // Ensure this is imported
-import Navbar from "./Navbar";
-import deliveryIcon from "../assets/Delivery_icon.jpg"; 
+import "./Homepage.css";
+import deliveryIcon from "../assets/Delivery_icon.jpg";
 
 function Homepage() {
   return (
     <div className="homepage">
-      <Navbar />
       <div className="content">
         <h1>Welcome to SendIT</h1>
         <p>Your trusted Courier service for seamless parcel deliveries.</p>
