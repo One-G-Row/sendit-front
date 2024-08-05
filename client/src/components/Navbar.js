@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { NavDropdown } from "react-bootstrap";
+import { NavDropdown } from "react-bootstrap"; 
 import "./Navbar.css";
 
 function Navbar() {
@@ -21,6 +21,9 @@ function Navbar() {
         </li>
         <li>
           <NavLink to="/destination">Destination</NavLink>
+        </li>
+        <li>
+          <NavLink to="/map">Map</NavLink> {/* Link to the map */}
         </li>
         <li>
           <NavDropdown title="Login">
