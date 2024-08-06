@@ -5,6 +5,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
 import 'ol/ol.css';
+import axios from 'axios';
 
 const NewOrder = () => {
   const [formData, setFormData] = useState({
@@ -39,27 +40,46 @@ const NewOrder = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+
+    // Assuming you have an endpoint to handle order creation
+    // const response = await fetch('/api/orders', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(formData)
+    // });
+
+    // if (response.ok) {
+    //   console.log('Order created successfully');
+    // } else {
+    //   console.error('Failed to create order');
+    // }
   };
 
-  const handleSearch = () => {
-    console.log("Searching for destination:", formData.destination);
+  const handleSearch = async () => {
+    const destination = formData.destination;
+    console.log("Searching for destination:", destination);
 
-    let coordinates;
-    if (formData.destination.toLowerCase() === 'nairobi') {
-      coordinates = [36.8219, -1.2921];
-    } else if (formData.destination.toLowerCase() === 'eldoret') {
-      coordinates = [35.2698, 0.5143];
-    }
+    try {
+      const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`);
+      if (response.data.length > 0) {
+        const place = response.data[0];
+        const coordinates = [parseFloat(place.lon), parseFloat(place.lat)];
+        console.log("Setting map view to coordinates:", coordinates);
 
-    if (coordinates && map) {
-      console.log("Setting map view to coordinates:", coordinates);
-      map.getView().setCenter(fromLonLat(coordinates));
-      map.getView().setZoom(10); // Adjust zoom level as needed
-    } else {
-      console.log("No matching coordinates found or map not initialized.");
+        if (map) {
+          map.getView().setCenter(fromLonLat(coordinates));
+          map.getView().setZoom(10); // Adjust zoom level as needed
+        }
+      } else {
+        console.log("No results found for the destination.");
+      }
+    } catch (error) {
+      console.error("Error fetching coordinates:", error);
     }
   };
 
