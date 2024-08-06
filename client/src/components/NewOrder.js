@@ -33,6 +33,11 @@ const NewOrder = () => {
       })
     });
     setMap(initialMap);
+
+    // Clean up function to avoid multiple map instances
+    return () => {
+      initialMap.setTarget(null);
+    };
   }, []);
 
   const handleChange = (e) => {
