@@ -11,7 +11,8 @@ import Admin from "./Admin";
 import Destination from "./Destination";
 import Parcel from "./Parcel";
 import User from "./User";
-import MapComponent from "./MapComponent"; 
+import MapComponent from "./MapComponent";
+import MyOrders from "./MyOrders";
 
 function App() {
   return (
@@ -28,7 +29,9 @@ function App() {
           <Route path="/signupadmin" element={<SignupAdmin />} />
           <Route path="/signupuser" element={<SignupUser />} />
           <Route path="/user" element={<User />} />
-          <Route path="/map" element={<MapComponent />} /> {/* Ensure this path is correct */}
+          <Route path="/map" element={<MapComponent />} />{" "}
+          {/* Ensure this path is correct */}
+          <Route path="/myorders" element={<MyOrders />} />
         </Routes>
       </main>
     </div>
