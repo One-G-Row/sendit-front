@@ -1,0 +1,54 @@
+.admin-container {
+    padding: 20px;
+  }
+  
+  .user-card, .parcel-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    padding: 10px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .card-subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  .card-text {
+    margin: 10px 0;
+  }
+  
+  .card-link {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .card-link:hover {
+    text-decoration: underline;
+  }
+  
+  .parcel-management {
+    margin-top: 20px;
+  }
+  
+  .parcel-management div {
+    margin-bottom: 10px;
+  }
+  
+  .parcel-management label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
