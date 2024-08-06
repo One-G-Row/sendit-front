@@ -23,17 +23,26 @@ function Navbar() {
           <NavLink to="/destination">Destination</NavLink>
         </li>
         <li>
-
-          <NavLink to="/locations">Map</NavLink>
-
-          <NavLink to="/map">Map</NavLink> {/* Link to the map */}
+          <NavLink to="/map">Map</NavLink>
         </li>
         <li>
-
-          <NavLink to="/new-order">New Order</NavLink> {/* Add this line */}
-
+          <NavLink to="/new-order">New Order</NavLink>
+        </li>
+        <li>
           <NavLink to="/myorders">My Orders</NavLink>
-
+        </li>
+        <li>
+          <NavLink to="/allorders">All Orders</NavLink>
+        </li>
+        <li>
+          <NavDropdown title="Login">
+            <NavDropdown.Item as={NavLink} to="/loginadmin">
+              Login Admin
+            </NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to="/loginuser">
+              Login User
+            </NavDropdown.Item>
+          </NavDropdown>
         </li>
         <li>
           <NavDropdown title="Login">
