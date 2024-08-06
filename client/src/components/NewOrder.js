@@ -41,18 +41,26 @@ const NewOrder = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., send data to the server
     console.log(formData);
   };
 
   const handleSearch = () => {
-    // Update map center based on destination input
+    console.log("Searching for destination:", formData.destination);
+
+    let coordinates;
     if (formData.destination.toLowerCase() === 'nairobi') {
-      map.getView().setCenter(fromLonLat([36.8219, -1.2921]));
+      coordinates = [36.8219, -1.2921];
     } else if (formData.destination.toLowerCase() === 'eldoret') {
-      map.getView().setCenter(fromLonLat([35.2698, 0.5143]));
+      coordinates = [35.2698, 0.5143];
     }
-    // Add more conditions for other destinations as needed
+
+    if (coordinates && map) {
+      console.log("Setting map view to coordinates:", coordinates);
+      map.getView().setCenter(fromLonLat(coordinates));
+      map.getView().setZoom(10); // Adjust zoom level as needed
+    } else {
+      console.log("No matching coordinates found or map not initialized.");
+    }
   };
 
   return (
