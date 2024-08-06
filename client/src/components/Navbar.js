@@ -23,6 +23,9 @@ function Navbar() {
           <NavLink to="/destination">Destination</NavLink>
         </li>
         <li>
+
+          <NavLink to="/locations">Map</NavLink>
+
           <NavLink to="/map">Map</NavLink> {/* Link to the map */}
         </li>
         <li>
