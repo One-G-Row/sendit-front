@@ -11,9 +11,7 @@ import Admin from "./Admin";
 import Destination from "./Destination";
 import Parcel from "./Parcel";
 import User from "./User";
-import MapComponent from "./Map";
-
-import MapComponent from "./MapComponent"; 
+ 
 import NewOrder from "./NewOrder"; 
 
 import MapComponent from "./MapComponent";
