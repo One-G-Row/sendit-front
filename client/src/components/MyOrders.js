@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import MyOrdersCard from "./MyOrderCard";
 
 function MyOrders() {
   return (
@@ -10,6 +11,7 @@ function MyOrders() {
         <button>New Order</button>
       </Link>
       <input type="text" placeholder="Search item" />
+      <MyOrdersCard />
     </div>
   );
 }
