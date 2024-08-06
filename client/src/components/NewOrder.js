@@ -6,6 +6,7 @@ import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
 import 'ol/ol.css';
 import axios from 'axios';
+import { haversineDistance } from './utils'; // Ensure the correct import path
 
 const NewOrder = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const NewOrder = () => {
   });
 
   const [map, setMap] = useState(null);
+  const [price, setPrice] = useState(null);
 
   useEffect(() => {
     const initialMap = new Map({
@@ -75,12 +77,27 @@ const NewOrder = () => {
           map.getView().setCenter(fromLonLat(coordinates));
           map.getView().setZoom(10); // Adjust zoom level as needed
         }
+
+        const origin = [36.8219, -1.2921]; // Nairobi coordinates (could be dynamic)
+        const distance = haversineDistance(origin, coordinates);
+        console.log("Calculated distance:", distance);
+
+        const weight = parseFloat(formData.weight);
+        const calculatedPrice = calculatePrice(weight, distance);
+        setPrice(calculatedPrice);
       } else {
         console.log("No results found for the destination.");
       }
     } catch (error) {
       console.error("Error fetching coordinates:", error);
     }
+  };
+
+  const calculatePrice = (weight, distance) => {
+    const basePrice = 5;
+    const weightCost = weight * 1; // $1 per kg
+    const distanceCost = distance * 0.5; // $0.50 per km
+    return basePrice + weightCost + distanceCost;
   };
 
   return (
@@ -135,6 +152,11 @@ const NewOrder = () => {
           Search Destination
         </button>
       </form>
+      {price !== null && (
+        <div>
+          <h2>Estimated Price: ${price.toFixed(2)}</h2>
+        </div>
+      )}
       <div
         id="map"
         style={{ width: '400px', height: '300px', position: 'absolute', bottom: '20px', right: '20px' }}
