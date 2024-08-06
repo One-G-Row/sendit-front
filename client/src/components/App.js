@@ -12,6 +12,7 @@ import Destination from "./Destination";
 import Parcel from "./Parcel";
 import User from "./User";
 import MapComponent from "./MapComponent"; 
+import NewOrder from "./NewOrder"; 
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/signupuser" element={<SignupUser />} />
           <Route path="/user" element={<User />} />
           <Route path="/map" element={<MapComponent />} /> {/* Ensure this path is correct */}
+          <Route path="/new-order" element={<NewOrder />} /> {/* Add this line */}
         </Routes>
       </main>
     </div>
