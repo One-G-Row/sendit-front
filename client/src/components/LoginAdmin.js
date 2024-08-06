@@ -1,51 +1,83 @@
-import React, { useState } from 'react';
-import './LoginAdmin.css';
 
-const LoginAdmin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import React from "react";
+// import Navbar from "./Navbar";
+import { useState } from "react";
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    
-    console.log('Admin Email:', email);
-    console.log('Admin Password:', password);
+const AdminLogin = () => {
+  const [formData, setFormData] = useState({
+      email: '',
+      password: ''
+  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleChange = (e) => {
+      setFormData({
+          ...formData,
+          [e.target.name]: e.target.value
+      });
+  };
+
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      setError('');
+      setSuccess('');
+
+      try {
+          const response = await fetch('http://127.0.0.1:5000/admin/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData),
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+              localStorage.setItem('access_token', data.access_token);
+              setSuccess('Login successful!');
+              // Redirect to admin dashboard or perform other actions
+          } else {
+              setError(data.message || 'An error occurred');
+          }
+      } catch (err) {
+          setError('An error occurred while logging in.');
+      }
   };
 
   return (
-    <div className="login-admin-container">
-      <h2 className="login-admin-title">Admin Login</h2>
-      <form className="login-admin-form" onSubmit={handleLogin}>
-        <div className="login-admin-form-group">
-          <label htmlFor="email" className="login-admin-label">Email</label>
-          <input
-            type="email"
-            id="email"
-            className="login-admin-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="login-admin-form-group">
-          <label htmlFor="password" className="login-admin-label">Password</label>
-          <input
-            type="password"
-            id="password"
-            className="login-admin-input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button className="login-admin-button" type="submit">Log in</button>
-      </form>
-      <div className="login-admin-footer">
-        <a href="#" className="login-admin-link">Forgot password?</a>
-        <a href="./SignupAdmin" className="login-admin-link">Sign up</a>
+      <div className="container">
+          <h2>Admin Login</h2>
+          {error && <p className="error">{error}</p>}
+          {success && <p className="success">{success}</p>}
+          <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                  />
+              </div>
+              <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                  />
+              </div>
+              <button type="submit">Login</button>
+          </form>
       </div>
-    </div>
+
   );
 };
 
-export default LoginAdmin;
+export default AdminLogin;
