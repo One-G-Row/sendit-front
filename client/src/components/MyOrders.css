@@ -1,0 +1,9 @@
+.myorderscard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 20%;
+  height: 30vh;
+  padding: px;
+  margin: 20px;
+}
