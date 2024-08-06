@@ -1,6 +1,6 @@
 import React from "react";
 import "./Homepage.css";
-import deliveryMan from "../assets/delivery_man.png";
+import deliveryMan from "../assets/Delivery_icon.jpg";
 
 function Homepage() {
   return (
