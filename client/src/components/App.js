@@ -7,13 +7,9 @@ import LoginUser from "./LoginUser";
 import Navbar from "./Navbar";
 import SignupAdmin from "./SignupAdmin";
 import SignupUser from "./SignupUser";
-import Admin from "./Admin";
 import Destination from "./Destination";
 import Parcel from "./Parcel";
-import User from "./User";
- 
 import NewOrder from "./NewOrder"; 
-
 import MapComponent from "./MapComponent";
 import MyOrders from "./MyOrders";
 
@@ -24,14 +20,13 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/admin" element={<Admin />} />
           <Route path="/destination" element={<Destination />} />
           <Route path="/parcel" element={<Parcel />} />
           <Route path="/loginadmin" element={<LoginAdmin />} />
           <Route path="/loginuser" element={<LoginUser />} />
           <Route path="/signupadmin" element={<SignupAdmin />} />
           <Route path="/signupuser" element={<SignupUser />} />
-          <Route path="/user" element={<User />} />
+          
 
           <Route path="/map" element={<MapComponent />} />
 

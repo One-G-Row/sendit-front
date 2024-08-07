@@ -8,34 +8,30 @@ function Navbar() {
     <nav className="navbar">
       <ul>
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/" className="sendit">
+            Send<span className="it">it</span>.
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/user">User</NavLink>
+          <NavLink to="/new-order">New Order</NavLink>
         </li>
         <li>
-          <NavLink to="/admin">Admin</NavLink>
-        </li>
-        <li>
-          <NavLink to="/parcel">Parcels</NavLink>
-        </li>
-        <li>
-          <NavLink to="/destination">Destination</NavLink>
-        </li>
-        <li>
-
-          <NavLink to="/locations">Map</NavLink>
-
-          <NavLink to="/map">Map</NavLink> {/* Link to the map */}
-        </li>
-        <li>
-
-          <NavLink to="/new-order">New Order</NavLink> {/* Add this line */}
-
           <NavLink to="/myorders">My Orders</NavLink>
-
         </li>
         <li>
+          <NavLink to="/allorders">All Orders</NavLink>
+        </li>
+        <li>
+          <NavLink to="/map">Map</NavLink>
+        </li>
+        <li>
+          <li>
+            <NavLink to="/parcel">Parcels</NavLink>
+          </li>
+          <li>
+            <NavLink to="/destination">Destination</NavLink>
+          </li>
+
           <NavDropdown title="Login">
             <NavDropdown.Item as={NavLink} to="/loginadmin">
               Login Admin
@@ -45,6 +41,7 @@ function Navbar() {
             </NavDropdown.Item>
           </NavDropdown>
         </li>
+
         <li>
           <NavDropdown title="Signup">
             <NavDropdown.Item as={NavLink} to="/signupadmin">
