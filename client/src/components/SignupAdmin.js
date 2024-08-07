@@ -3,8 +3,8 @@ import './SignupAdmin.css';
 
 const AdminRegister = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',  // Updated to match server-side field names
+    last_name: '',   // Updated to match server-side field names
     email: '',
     password: ''
   });
@@ -50,24 +50,24 @@ const AdminRegister = () => {
       {success && <p className="success-message">{success}</p>}
       <form onSubmit={handleSubmit} className="register-form">
         <div className="register-form-group">
-          <label htmlFor="firstName" className="register-label">First Name</label>
+          <label htmlFor="first_name" className="register-label">First Name</label>
           <input
             type="text"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
+            id="first_name"
+            name="first_name"  // Updated to match server-side field names
+            value={formData.first_name}  // Updated to match server-side field names
             onChange={handleChange}
             className="register-input"
             required
           />
         </div>
         <div className="register-form-group">
-          <label htmlFor="lastName" className="register-label">Last Name</label>
+          <label htmlFor="last_name" className="register-label">Last Name</label>
           <input
             type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
+            id="last_name"
+            name="last_name"  // Updated to match server-side field names
+            value={formData.last_name}  // Updated to match server-side field names
             onChange={handleChange}
             className="register-input"
             required
