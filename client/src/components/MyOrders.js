@@ -22,14 +22,14 @@ function MyOrders() {
   }
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/mycourses")
+    fetch("http://127.0.0.1:5555/myorders")
       .then((response) => response.json())
       .then((order) => setMyOrders(order))
       .catch((err) => console.log("fetch my order error"));
   }, []);
 
   function removeOrder(id) {
-    fetch(`http://127.0.0.1:5555/mycourses/${id}`, {
+    fetch(`http://127.0.0.1:5555/myorders/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -49,7 +49,6 @@ function MyOrders() {
   return (
     <div className="myorders">
       <h1>My Orders</h1>
-      {/* review link for new order...go to previous page to make a new order */}
       <Link to="/new-order">
         <button>New Order</button>
       </Link>
@@ -68,7 +67,7 @@ function MyOrders() {
             description={order.description}
             weight={order.weight}
             destination={order.destination}
-            status={order.status}
+            status={order.status} 
             removeCourse={() => removeOrder(order.id)}
           />
         ))}
