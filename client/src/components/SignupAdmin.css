@@ -1,7 +1,13 @@
-
-.login-container {
+/* Container styling for centering the form */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   max-width: 400px;
   width: 100%;
+  height: 80vh; 
+  margin: 0 auto; 
   padding: 2rem;
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -10,23 +16,28 @@
   text-align: center;
 }
 
-.login-title {
+/* Title styling */
+.register-title {
   font-size: 24px;
   font-weight: bold;
   color: #6B3FA0;
   margin-bottom: 1.5rem;
 }
 
-.login-form {
+/* Form styling */
+.register-form {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-.login-form-group {
+/* Form group styling */
+.register-form-group {
   margin-bottom: 1rem;
 }
 
-.login-label {
+/* Label styling */
+.register-label {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 14px;
@@ -34,7 +45,8 @@
   text-align: left;
 }
 
-.login-input {
+/* Input styling */
+.register-input {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
@@ -43,7 +55,8 @@
   box-sizing: border-box;
 }
 
-.login-button {
+/* Button styling */
+.register-button {
   width: 100%;
   padding: 0.75rem;
   background-color: #81B622;
@@ -55,15 +68,18 @@
   margin-top: 1rem;
 }
 
-.login-button:hover {
+/* Button hover effect */
+.register-button:hover {
   background-color: #6D991D;
 }
 
+/* Error message styling */
 .error-message {
   color: red;
   margin-bottom: 1rem;
 }
 
+/* Success message styling */
 .success-message {
   color: green;
   margin-bottom: 1rem;

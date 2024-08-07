@@ -1,13 +1,17 @@
+.navbar {
+  background: #729e45;
+}
+
 .navbar ul {
   display: flex;
   list-style: none;
-  padding: 0;
-  margin: 0;
+  font-weight: bold;
 }
 
 .navbar ul li {
   display: inline-flex;
   padding: 10px;
+  color: white;
 }
 
 .navbar ul li a {
@@ -18,4 +22,34 @@
 .navbar ul li a.active {
   font-weight: bold;
   /* Add any additional styling for active links */
+}
+.sendit,
+.it {
+  font-style: italic;
+  font-size: 45pt;
+  font-weight: bold;
+}
+
+.sendit {
+  color: #fff;
+}
+
+.it {
+  color: #65558f;
+}
+
+.links,
+.loginsignup {
+  font-size: 14pt;
+}
+
+.links {
+  position: relative;
+  left: 5vw;
+  padding-left: 18px;
+}
+.loginsignup {
+  position: relative;
+  right: -20vw;
+  padding: 15px;
 }

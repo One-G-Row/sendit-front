@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-.login-container {
+.signup-container {
   max-width: 400px;
   margin: 0 auto;
   padding: 40px;
@@ -13,12 +13,12 @@
 
 h1 {
   font-size: 2rem;
-  color: #333;
+  color: #6b3fa0;
   margin-bottom: 20px;
   font-weight: 600;
 }
 
-.login-form {
+.signup-form {
   display: flex;
   flex-direction: column;
 }
@@ -50,7 +50,7 @@ input:focus {
   outline: none;
 }
 
-.login-button {
+.signup-button {
   background-color: #81B622;
   color: white;
   border: none;
@@ -64,33 +64,21 @@ input:focus {
   transition: background-color 0.3s;
 }
 
-.login-button:hover {
+.signup-button:hover {
   background-color: #6b3fa0;
 }
 
-.signup-link {
+.login-link {
   margin-top: 20px;
   font-size: 0.9rem;
 }
 
-.signup-link a {
+.login-link a {
   color: #6B3FA0;
   text-decoration: none;
   font-weight: 500;
 }
 
-.signup-link a:hover {
+.login-link a:hover {
   text-decoration: underline;
-}
-
-.error {
-  color: red;
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-}
-
-.success {
-  color: green;
-  font-size: 0.9rem;
-  margin-bottom: 10px;
 }
