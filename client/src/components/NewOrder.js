@@ -9,7 +9,7 @@ import { LineString as OLLineString } from 'ol/geom';
 import { Feature } from 'ol';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
-import { Circle as CircleGeom } from 'ol/geom'; // Correct import for Circle geometry
+import { Circle as CircleGeom } from 'ol/geom'; // Ensure Circle is imported correctly
 import 'ol/ol.css';
 import axios from 'axios';
 import { haversineDistance } from './utils';
@@ -98,18 +98,15 @@ const NewOrder = () => {
             }
           });
 
-          // Add markers for origin and destination
-          const origin = [36.8219, -1.2921]; // Nairobi coordinates
-
           // Create the feature for the line
           const lineFeature = new Feature({
-            geometry: new OLLineString([fromLonLat(origin), fromLonLat(coordinates)])
+            geometry: new OLLineString([fromLonLat([36.8219, -1.2921]), fromLonLat(coordinates)])
           });
 
           // Create the line style
           const lineStyle = new Style({
             stroke: new Stroke({
-              color: '#6A0D91', // Slightly darker purple for the line
+              color: '#4B0082', // Darker purple for the line
               width: 4
             })
           });
@@ -128,7 +125,7 @@ const NewOrder = () => {
           map.addLayer(vectorLayer);
 
           const originMarker = new Feature({
-            geometry: new CircleGeom(fromLonLat(origin), 5000) // Adjust radius if needed
+            geometry: new CircleGeom(fromLonLat([36.8219, -1.2921]), 5000) // Adjust radius if needed
           });
 
           const destinationMarker = new Feature({
@@ -161,7 +158,7 @@ const NewOrder = () => {
 
           map.addLayer(markerLayer);
 
-          const distance = haversineDistance(origin, coordinates);
+          const distance = haversineDistance([36.8219, -1.2921], coordinates);
           setDistance(distance);
 
           const weight = parseFloat(formData.weight);
@@ -274,9 +271,13 @@ const NewOrder = () => {
             Checkout
           </button>
           {price !== null && (
-            <div style={{ color: '#6A0D91', fontFamily: 'Arial, sans-serif', fontSize: '16px' }}>
-              <h2>Estimated Price: KES {price.toFixed(2)}</h2>
-              {distance !== null && <p>Distance: {distance.toFixed(2)} km</p>}
+            <div style={{ color: '#6A0D91', fontSize: '18px', marginRight: '10px' }}>
+              Estimated Price: KES {price.toFixed(2)}
+            </div>
+          )}
+          {distance !== null && (
+            <div style={{ color: '#6A0D91', fontSize: '18px' }}>
+              Distance: {distance.toFixed(2)} km
             </div>
           )}
         </div>
