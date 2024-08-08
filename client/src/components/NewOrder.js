@@ -3,15 +3,16 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import { fromLonLat, toLonLat } from 'ol/proj';
-import { Vector as VectorLayer } from 'ol/layer';
-import { Vector as VectorSource } from 'ol/source';
+import { fromLonLat } from 'ol/proj';
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
+import { LineString as OLLineString } from 'ol/geom';
 import { Feature } from 'ol';
-import { Point, LineString } from 'ol/geom';
-import { Style, Icon, Stroke } from 'ol/style';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
+import { Circle as CircleGeom } from 'ol/geom'; // Ensure Circle is imported correctly
 import 'ol/ol.css';
 import axios from 'axios';
-import { haversineDistance } from './utils'; // Ensure the correct import path
+import { haversineDistance } from './utils';
 
 const NewOrder = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const NewOrder = () => {
 
   const [map, setMap] = useState(null);
   const [price, setPrice] = useState(null);
-  const [destinationCoordinates, setDestinationCoordinates] = useState(null);
+  const [distance, setDistance] = useState(null);
 
   useEffect(() => {
     const initialMap = new Map({
@@ -40,13 +41,6 @@ const NewOrder = () => {
         zoom: 7
       })
     });
-
-    const vectorSource = new VectorSource();
-    const vectorLayer = new VectorLayer({
-      source: vectorSource
-    });
-    initialMap.addLayer(vectorLayer);
-
     setMap(initialMap);
 
     // Clean up function to avoid multiple map instances
@@ -97,48 +91,75 @@ const NewOrder = () => {
           map.getView().setCenter(fromLonLat(coordinates));
           map.getView().setZoom(10); // Adjust zoom level as needed
 
-          const vectorSource = map.getLayers().getArray()[1].getSource(); // Get vector source
-          vectorSource.clear(); // Clear existing features
-
-          const origin = [36.8219, -1.2921]; // Nairobi coordinates
-          const originFeature = new Feature({
-            geometry: new Point(fromLonLat(origin))
+          // Clear existing layers
+          map.getLayers().forEach(layer => {
+            if (layer instanceof VectorLayer) {
+              map.removeLayer(layer);
+            }
           });
-          originFeature.setStyle(new Style({
-            image: new Icon({
-              src: 'https://openlayers.org/en/latest/examples/data/icon.png', // Add a URL for the icon you want
-              scale: 0.5 // Larger marker size
-            })
-          }));
 
-          const destinationFeature = new Feature({
-            geometry: new Point(fromLonLat(coordinates))
-          });
-          destinationFeature.setStyle(new Style({
-            image: new Icon({
-              src: 'https://openlayers.org/en/latest/examples/data/icon.png', // Add a URL for the icon you want
-              scale: 0.5 // Larger marker size
-            })
-          }));
-
+          // Create the feature for the line
           const lineFeature = new Feature({
-            geometry: new LineString([fromLonLat(origin), fromLonLat(coordinates)])
+            geometry: new OLLineString([fromLonLat([36.8219, -1.2921]), fromLonLat(coordinates)])
           });
-          lineFeature.setStyle(new Style({
+
+          // Create the line style
+          const lineStyle = new Style({
             stroke: new Stroke({
-              color: '#E0B2FF', // Light purple color
-              width: 3
+              color: '#4B0082', // Darker purple for the line
+              width: 4
+            })
+          });
+
+          // Apply the line style
+          lineFeature.setStyle(lineStyle);
+
+          const vectorSource = new VectorSource({
+            features: [lineFeature]
+          });
+
+          const vectorLayer = new VectorLayer({
+            source: vectorSource
+          });
+
+          map.addLayer(vectorLayer);
+
+          const originMarker = new Feature({
+            geometry: new CircleGeom(fromLonLat([36.8219, -1.2921]), 5000) // Adjust radius if needed
+          });
+
+          const destinationMarker = new Feature({
+            geometry: new CircleGeom(fromLonLat(coordinates), 5000) // Adjust radius if needed
+          });
+
+          originMarker.setStyle(new Style({
+            image: new CircleStyle({
+              radius: 12, // Adjust marker size
+              fill: new Fill({ color: '#7F00FF' }), // Purple
+              stroke: new Stroke({ color: '#000000', width: 2 })
             })
           }));
 
-          vectorSource.addFeature(originFeature);
-          vectorSource.addFeature(destinationFeature);
-          vectorSource.addFeature(lineFeature);
+          destinationMarker.setStyle(new Style({
+            image: new CircleStyle({
+              radius: 12, // Adjust marker size
+              fill: new Fill({ color: '#7F00FF' }), // Purple
+              stroke: new Stroke({ color: '#000000', width: 2 })
+            })
+          }));
 
-          setDestinationCoordinates(coordinates);
+          const markerSource = new VectorSource({
+            features: [originMarker, destinationMarker]
+          });
 
-          const distance = haversineDistance(origin, coordinates);
-          console.log("Calculated distance:", distance);
+          const markerLayer = new VectorLayer({
+            source: markerSource
+          });
+
+          map.addLayer(markerLayer);
+
+          const distance = haversineDistance([36.8219, -1.2921], coordinates);
+          setDistance(distance);
 
           const weight = parseFloat(formData.weight);
           const calculatedPrice = calculatePrice(weight, distance);
@@ -207,8 +228,10 @@ const NewOrder = () => {
             />
           </label>
           <br />
-          <button type="submit">Submit</button>
-          <button type="button" onClick={handleSearch} style={{ marginLeft: '10px' }}>
+          <button type="submit" style={{ backgroundColor: '#4B0082', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px' }}>
+            Submit
+          </button>
+          <button type="button" onClick={handleSearch} style={{ backgroundColor: '#4B0082', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', marginLeft: '10px' }}>
             Search Destination
           </button>
         </form>
@@ -248,8 +271,13 @@ const NewOrder = () => {
             Checkout
           </button>
           {price !== null && (
-            <div>
-              <h2>Estimated Price: KES {price.toFixed(2)}</h2>
+            <div style={{ color: '#6A0D91', fontSize: '18px', marginRight: '10px' }}>
+              Estimated Price: KES {price.toFixed(2)}
+            </div>
+          )}
+          {distance !== null && (
+            <div style={{ color: '#6A0D91', fontSize: '18px' }}>
+              Distance: {distance.toFixed(2)} km
             </div>
           )}
         </div>
