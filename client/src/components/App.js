@@ -8,7 +8,7 @@ import SignupAdmin from "./SignupAdmin";
 import SignupUser from "./SignupUser";
 import NewOrder from "./NewOrder";
 import MyOrders from "./MyOrders";
-import AllOrders from "./AllOrders"; // Ensure this component exists
+import AllOrders from "./AllOrders";
 import MapComponent from "./MapComponent";
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
@@ -26,14 +26,14 @@ function App() {
             <Route path="/signupadmin" element={<SignupAdmin />} />
             <Route path="/signupuser" element={<SignupUser />} />
             <Route path="/map" element={<MapComponent />} />
-            
+
             {/* Protected Routes */}
             <Route path="/new-order" element={
               <ProtectedRoute element={<NewOrder />} allowedRoles={['user']} />
             } />
             <Route path="/myorders" element={
               <ProtectedRoute element={<MyOrders />} allowedRoles={['user']} />
-            } />
+            } /> 
             <Route path="/allorders" element={
               <ProtectedRoute element={<AllOrders />} allowedRoles={['admin']} />
             } />

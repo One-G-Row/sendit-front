@@ -1,5 +1,15 @@
-import React, { useState } from "react";
-import './LoginAdmin.css';  
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+import './LoginAdmin.css';
+
+// Mock data for admin login
+const mockAdminData = {
+  email: 'admin@example.com',
+  password: 'admin123',
+  token: 'mock_admin_token',
+  role: 'admin'
+};
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +18,8 @@ const AdminLogin = () => {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth(); // Use Auth context
 
   const handleChange = (e) => {
     setFormData({
@@ -16,30 +28,18 @@ const AdminLogin = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
-    try {
-      const response = await fetch('http://127.0.0.1:5000/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        localStorage.setItem('access_token', data.access_token);
-        setSuccess('Login successful!');
-        // Redirect to admin dashboard or perform other actions
-      } else {
-        setError(data.message || 'An error occurred');
-      }
-    } catch (err) {
-      setError('An error occurred while logging in.');
+    // Simulate login with mock data
+    if (formData.email === mockAdminData.email && formData.password === mockAdminData.password) {
+      login(mockAdminData); // Set user in context and local storage
+      setSuccess('Login successful!');
+      navigate('/allorders'); // Redirect to the All Orders page
+    } else {
+      setError('Invalid email or password');
     }
   };
 
