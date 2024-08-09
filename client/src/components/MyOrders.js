@@ -9,15 +9,13 @@ function MyOrders() {
 
   function filterOrders(e) {
     const input = e.target.value;
+    setSearch(input);
 
     const filtered = myorders.filter(
       (myorder) =>
         myorder.item.toLowerCase().includes(input.toLowerCase()) ||
         myorder.description.toLowerCase().includes(input.toLowerCase()) ||
-        myorder.weight.toLowerCase().includes(input.toLowerCase()) ||
         myorder.destination.toLowerCase().includes(input.toLowerCase())
-      /* myorder.cost.toLowerCase().includes(input.toLowerCase()) || */
-      /* myorder.status.toLowerCase().includes(input.toLowerCase()) */
     );
     setFilteredOrders(filtered);
   }
@@ -52,7 +50,7 @@ function MyOrders() {
     const updatedOrders = myorders.filter((order) => order.id !== id);
     setMyOrders(updatedOrders);
   }
-
+  /* 
   const ordersArr = Object.entries(myorders).map(
     ([key, item, description, weight, destination]) => [
       key,
@@ -62,10 +60,11 @@ function MyOrders() {
       destination,
     ]
   );
-  console.log(ordersArr);
+  //console.log(ordersArr);
 
   const orderValues = Object.values(myorders);
-  console.log(orderValues);
+   */
+  console.log(filteredOrders);
 
   return (
     <div className="myorders">
@@ -89,18 +88,18 @@ function MyOrders() {
                 description={order.description}
                 weight={order.weight}
                 destination={order.destination}
-                status={order.status} 
+                status={order.status}
                 removeOrder={() => removeOrder(order.id)}
               />
             ))
-          : orderValues.map((order) => (
+          : myorders.map((order) => (
               <MyOrdersCard
                 key={order.id}
                 item={order.item}
                 description={order.description}
                 weight={order.weight}
                 destination={order.destination}
-                status={order.status} 
+                status={order.status}
                 removeOrder={() => removeOrder(order.id)}
               />
             ))}

@@ -29,3 +29,11 @@
 .myorders button {
   position: relative;
 }
+
+.search {
+  color: #000;
+  font-size: 16pt;
+  padding: 10px;
+  position: relative;
+  z-index: 1;
+}
