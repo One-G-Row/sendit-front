@@ -1,0 +1,30 @@
+order-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 200px;
+    text-align: left;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-card p {
+    margin: 5px 0;
+  }
+  
+  .change-status-button,
+  .change-location-button {
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .change-location-button {
+    background-color: #4a148c;
+    margin-top: 5px;
+  }
