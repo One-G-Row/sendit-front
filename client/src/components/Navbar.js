@@ -5,7 +5,7 @@ import { useAuth } from "./AuthContext";
 import "./Navbar.css";
 
 function Navbar() {
-  const { admin, user } = useAuth(); // Adjust based on how your context provides auth info
+  const { user, admin } = useAuth(); // Adjusted based on how your context provides auth info
 
   return (
     <nav className="navbar">
@@ -16,7 +16,7 @@ function Navbar() {
               Send<span className="it">it</span>.
             </NavLink>
           </li>
-          
+
           {/* Conditionally render links based on user role */}
           {user && (
             <>

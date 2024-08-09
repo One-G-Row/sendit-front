@@ -55,12 +55,12 @@ function AllOrders() {
 
   return (
     <div className="allorders">
-      <header>
+      {/* <header>
         <h1>
           Send<strong>it.</strong>
         </h1>
         <button className="logout-button">Log out</button>
-      </header>
+      </header> */}
       <div className="container">
         <div className="search-bar">
           <input
