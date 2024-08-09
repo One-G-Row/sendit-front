@@ -8,10 +8,10 @@ function MyOrdersCard({
   weight,
   destination,
   status,
-  removeCourse,
+  removeOrder,
 }) {
   function handleDelete() {
-    removeCourse(id);
+    removeOrder(id);
   }
 
   return (
