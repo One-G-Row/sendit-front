@@ -5,8 +5,9 @@ import { useAuth } from "./AuthContext";
 import "./Navbar.css";
 
 function Navbar() {
-  const { user, admin } = useAuth(); // Adjusted based on how your context provides auth info
+  const { user, admin, logout } = useAuth(); // Assume `logout` is a function from your auth context
 
+  
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -44,23 +45,32 @@ function Navbar() {
       </div>
 
       <div className="navbar-right">
-        <NavDropdown title="Login" className="loginsignup">
-          <NavDropdown.Item as={NavLink} to="/loginadmin">
-            Login Admin
-          </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/loginuser">
-            Login User
-          </NavDropdown.Item>
-        </NavDropdown>
+        {/* Conditional rendering for Login/Signup vs Logout */}
+        {!user && !admin ? (
+          <>
+            <NavDropdown title="Login" className="loginsignup">
+              <NavDropdown.Item as={NavLink} to="/loginadmin">
+                Login Admin
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/loginuser">
+                Login User
+              </NavDropdown.Item>
+            </NavDropdown>
 
-        <NavDropdown title="Signup" className="loginsignup">
-          <NavDropdown.Item as={NavLink} to="/signupadmin">
-            Signup Admin
-          </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/signupuser">
-            Signup User
-          </NavDropdown.Item>
-        </NavDropdown>
+            <NavDropdown title="Signup" className="loginsignup">
+              <NavDropdown.Item as={NavLink} to="/signupadmin">
+                Signup Admin
+              </NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/signupuser">
+                Signup User
+              </NavDropdown.Item>
+            </NavDropdown>
+          </>
+        ) : (
+          <button onClick={logout} className="logout-button">
+            Logout
+          </button>
+        )}
       </div>
     </nav>
   );
