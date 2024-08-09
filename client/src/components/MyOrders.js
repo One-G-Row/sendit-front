@@ -4,32 +4,42 @@ import MyOrdersCard from "./MyOrderCard";
 
 function MyOrders() {
   const [myorders, setMyOrders] = useState([]);
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
-
+  const [status, setStatus] = useState([]);
+  
   function filterOrders(e) {
     const input = e.target.value;
+    setSearch(input);
 
     const filtered = myorders.filter(
       (myorder) =>
-        myorder.item.toLowerCase().includes(input.toLowercase()) ||
+        myorder.item.toLowerCase().includes(input.toLowerCase()) ||
         myorder.description.toLowerCase().includes(input.toLowerCase()) ||
-        myorder.weight.toLowerCase().includes(input.toLowerCase()) ||
-        myorder.cost.toLowerCase().includes(input.toLowerCase()) ||
-        myorder.status.toLowerCase().includes(input.toLowerCase())
+        myorder.destination.toLowerCase().includes(input.toLowerCase())
     );
     setFilteredOrders(filtered);
   }
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/myorders")
+    fetch("http://127.0.0.1:5000/myorders")
       .then((response) => response.json())
-      .then((order) => setMyOrders(order))
+      .then((orders) => {
+        if (orders) {
+          setMyOrders(orders);
+        } else {
+          console.log("failed to fetch myorders");
+        }
+      })
       .catch((err) => console.log("fetch my order error"));
   }, []);
 
+  useEffect(() => {
+    fetch("")
+  })
+
   function removeOrder(id) {
-    fetch(`http://127.0.0.1:5555/myorders/${id}`, {
+    fetch(`http://127.0.0.1:5000/myorders/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -45,6 +55,21 @@ function MyOrders() {
     const updatedOrders = myorders.filter((order) => order.id !== id);
     setMyOrders(updatedOrders);
   }
+  /* 
+  const ordersArr = Object.entries(myorders).map(
+    ([key, item, description, weight, destination]) => [
+      key,
+      item,
+      description,
+      weight,
+      destination,
+    ]
+  );
+  //console.log(ordersArr);
+
+  const orderValues = Object.values(myorders);
+   */
+  console.log(filteredOrders);
 
   return (
     <div className="myorders">
@@ -59,18 +84,31 @@ function MyOrders() {
         onChange={filterOrders}
         placeholder="Search item"
       />
-      {myorders &&
-        myorders.map((order) => (
-          <MyOrdersCard
-            key={order.id}
-            item={order.item}
-            description={order.description}
-            weight={order.weight}
-            destination={order.destination}
-            status={order.status} 
-            removeCourse={() => removeOrder(order.id)}
-          />
-        ))}
+      <div className="myorders-card">
+        {filteredOrders.length > 0
+          ? filteredOrders.map((order) => (
+              <MyOrdersCard
+                key={order.id}
+                item={order.item}
+                description={order.description}
+                weight={order.weight}
+                destination={order.destination}
+                status={order.status}
+                removeOrder={() => removeOrder(order.id)}
+              />
+            ))
+          : myorders.map((order) => (
+              <MyOrdersCard
+                key={order.id}
+                item={order.item}
+                description={order.description}
+                weight={order.weight}
+                destination={order.destination}
+                status={order.status}
+                removeOrder={() => removeOrder(order.id)}
+              />
+            ))}
+      </div>
     </div>
   );
 }

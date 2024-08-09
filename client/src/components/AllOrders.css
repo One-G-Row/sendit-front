@@ -1,94 +1,59 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  background-color: #7BB748;
-  padding: 10px 20px;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 24px;
-}
-
-header .logout-button {
-  background-color: #6D3F95;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-header .logout-button:hover {
-  background-color: #5A3178;
-}
-
-.container {
+.all-orders {
   padding: 20px;
-  text-align: center;
+  background-color: #f8f9fa;
 }
 
-.container h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.search-bar {
-  margin-bottom: 20px;
-}
-
-.search-bar input {
-  padding: 10px;
-  width: 100%;
-  max-width: 400px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.order-list {
+.card-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 20px;
 }
 
-.order-card {
-  background-color: #f9f9f9;
+.parcel-card {
+  width: 300px;
+  margin: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px;
-  width: calc(33% - 40px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: left;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.order-card p {
-  margin: 5px 0;
+.parcel-card .card-body {
+  padding: 15px;
 }
 
-.order-card button {
-  background-color: #6D3F95;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.parcel-card .card-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.parcel-card .card-subtitle {
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.parcel-card .card-text {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+button {
   margin-top: 10px;
-  width: 100%;
 }
 
-.order-card button:hover {
-  background-color: #5A3178;
+button.primary {
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
-.change-location-button {
-  margin-top: 5px;
+button.primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
 }
