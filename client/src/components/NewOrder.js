@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
-import { fromLonLat } from 'ol/proj';
-import 'ol/ol.css';
-import axios from 'axios';
-import { haversineDistance } from './utils'; // Ensure the correct import path
+import React, { useState, useEffect } from "react";
+import Map from "ol/Map";
+import View from "ol/View";
+import TileLayer from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
+import { fromLonLat } from "ol/proj";
+import "ol/ol.css";
+import axios from "axios";
+import { haversineDistance } from "./utils"; // Ensure the correct import path
 
 const NewOrder = () => {
   const [formData, setFormData] = useState({
-    parcelItem: '',
-    description: '',
-    weight: '',
-    destination: ''
+    item: "",
+    description: "",
+    weight: "",
+    destination: "",
   });
 
   const [map, setMap] = useState(null);
   const [price, setPrice] = useState(null);
+  const [responseMessage, setResponseMessage] = useState("");
 
   useEffect(() => {
     const initialMap = new Map({
-      target: 'map',
+      target: "map",
       layers: [
         new TileLayer({
-          source: new OSM()
-        })
+          source: new OSM(),
+        }),
       ],
       view: new View({
         center: fromLonLat([36.8219, -1.2921]), // Default center to Nairobi
-        zoom: 7
-      })
+        zoom: 7,
+      }),
     });
     setMap(initialMap);
 
@@ -43,7 +44,7 @@ const NewOrder = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -51,20 +52,22 @@ const NewOrder = () => {
     e.preventDefault();
     console.log(formData);
 
-    // Assuming you have an endpoint to handle order creation
-    // const response = await fetch('/api/orders', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(formData)
-    // });
+    //Assuming you have an endpoint to handle order creation
+    const response = await fetch("http://127.0.0.1:5000/myorders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
-    // if (response.ok) {
-    //   console.log('Order created successfully');
-    // } else {
-    //   console.error('Failed to create order');
-    // }
+    if (response.ok) {
+      console.log("Order created successfully");
+      setResponseMessage("Order created successfully");
+    } else {
+      console.error("Failed to create order");
+      setResponseMessage("Failed to create order");
+    }
   };
 
   const handleSearch = async () => {
@@ -72,7 +75,9 @@ const NewOrder = () => {
     console.log("Searching for destination:", destination);
 
     try {
-      const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`);
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${destination}`
+      );
       if (response.data.length > 0) {
         const place = response.data[0];
         const coordinates = [parseFloat(place.lon), parseFloat(place.lat)];
@@ -113,8 +118,8 @@ const NewOrder = () => {
           Parcel Item:
           <input
             type="text"
-            name="parcelItem"
-            value={formData.parcelItem}
+            name="item"
+            value={formData.item}
             onChange={handleChange}
             required
           />
@@ -153,7 +158,11 @@ const NewOrder = () => {
         </label>
         <br />
         <button type="submit">Submit</button>
-        <button type="button" onClick={handleSearch} style={{ marginLeft: '10px' }}>
+        <button
+          type="button"
+          onClick={handleSearch}
+          style={{ marginLeft: "10px" }}
+        >
           Search Destination
         </button>
       </form>
@@ -162,9 +171,16 @@ const NewOrder = () => {
           <h2>Estimated Price: ${price.toFixed(2)}</h2>
         </div>
       )}
+      <p>{responseMessage}</p>
       <div
         id="map"
-        style={{ width: '400px', height: '300px', position: 'absolute', bottom: '20px', right: '20px' }}
+        style={{
+          width: "400px",
+          height: "300px",
+          position: "absolute",
+          bottom: "20px",
+          right: "20px",
+        }}
       ></div>
     </div>
   );
