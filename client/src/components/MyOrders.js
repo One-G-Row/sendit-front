@@ -6,7 +6,8 @@ function MyOrders() {
   const [myorders, setMyOrders] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
-
+  const [status, setStatus] = useState([]);
+  
   function filterOrders(e) {
     const input = e.target.value;
     setSearch(input);
@@ -32,6 +33,10 @@ function MyOrders() {
       })
       .catch((err) => console.log("fetch my order error"));
   }, []);
+
+  useEffect(() => {
+    fetch("")
+  })
 
   function removeOrder(id) {
     fetch(`http://127.0.0.1:5000/myorders/${id}`, {
