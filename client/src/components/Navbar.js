@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
 import { useAuth } from "./AuthContext";
@@ -6,8 +6,16 @@ import "./Navbar.css";
 
 function Navbar() {
   const { user, admin, logout } = useAuth(); // Assume `logout` is a function from your auth context
+  const [logoutMessage, setLogoutMessage] = useState(""); // State to manage logout message
 
-  
+  const handleLogout = () => {
+    logout();
+    setLogoutMessage("Logged out successfully");
+    setTimeout(() => {
+      setLogoutMessage(""); // Clear message after 3 seconds
+    }, 3000);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -18,29 +26,32 @@ function Navbar() {
             </NavLink>
           </li>
 
-          {/* Conditionally render links based on user role */}
-          {user && (
-            <>
-              <li>
-                <NavLink to="/new-order" className="links">
-                  New Order
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/myorders" className="links">
-                  My Orders
-                </NavLink>
-              </li>
-            </>
-          )}
+          {/* Container for nav links */}
+          <div className="nav-links-container">
+            {/* Conditionally render links based on user role */}
+            {user && (
+              <>
+                <li>
+                  <NavLink to="/new-order" className="links">
+                    New Order
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/myorders" className="links">
+                    My Orders
+                  </NavLink>
+                </li>
+              </>
+            )}
 
-          {admin && (
-            <li>
-              <NavLink to="/allorders" className="links">
-                All Orders
-              </NavLink>
-            </li>
-          )}
+            {admin && (
+              <li>
+                <NavLink to="/allorders" className="links">
+                  All Orders
+                </NavLink>
+              </li>
+            )}
+          </div>
         </ul>
       </div>
 
@@ -67,11 +78,18 @@ function Navbar() {
             </NavDropdown>
           </>
         ) : (
-          <button onClick={logout} className="logout-button">
-            Logout
+          <button onClick={handleLogout} className="logout-button">
+            Log out
           </button>
         )}
       </div>
+
+      {/* Display logout message */}
+      {logoutMessage && (
+        <div className="logout-message">
+          {logoutMessage}
+        </div>
+      )}
     </nav>
   );
 }

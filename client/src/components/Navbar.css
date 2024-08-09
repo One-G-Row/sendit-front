@@ -3,13 +3,14 @@
   display: flex;
   justify-content: space-between; /* Space out left and right sections */
   padding: 0 20px; /* Add padding to the left and right of the navbar */
-  height: 100px;;
+  height: 90px;;
   
 }
 
 .navbar-left {
   display: flex;
   align-items: center; /* Center items vertically */
+  height: 60px;
 }
 
 .navbar ul {
@@ -82,4 +83,42 @@
 .navbar-right {
   margin-right: 40px;
   display : flex;
+}
+
+.nav-links-container {
+  display: flex;
+  padding: 10px;
+  color: white;
+  margin-left: 1000px;
+  
+}
+
+.logout-button{
+  background-color: #729e45;
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover{
+  background-color: #65558f;
+}
+
+.logout-message {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: #65558f; /* Green background for success */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  z-index: 1000; /* Ensure it's above other elements */
+  margin-top: 100px;
 }
