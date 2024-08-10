@@ -16,7 +16,7 @@ function Navbar() {
               Send<span className="it">it</span>.
             </NavLink>
           </li>
-          
+
           {/* Conditionally render links based on user role */}
           {user && (
             <>

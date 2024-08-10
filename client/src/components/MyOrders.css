@@ -1,3 +1,29 @@
+h1 {
+  font-family: Concert One;
+  font-weight: bold;
+  color: #65558f;
+  padding: 10px;
+  margin-left: 4vw;
+}
+.new-order {
+  width: 162px;
+  height: 63px;
+  background: #65558f;
+  color: #ffffff;
+  border-radius: 10px;
+  border: none;
+  margin-left: 5vw;
+}
+
+.search {
+  width: 360px;
+  height: 56px;
+  top: 2px;
+  left: 20vw;
+  background: #ece6f0;
+  padding: 10px;
+}
+
 .myorderscard {
   display: inline-flex;
   flex-direction: column;
@@ -36,4 +62,19 @@
   padding: 10px;
   position: relative;
   z-index: 1;
+}
+
+button {
+  background: #65558f;
+  color: #ffffff;
+  border: none;
+  font-weight: bold;
+  font-size: 16pt;
+}
+
+.cancel-order,
+.change-destination {
+  padding-bottom: 10px;
+  margin: 10px;
+  border-radius: 10px;
 }
