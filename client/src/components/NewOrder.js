@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./NewOrder.css"
 import Map from "ol/Map";
 import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
