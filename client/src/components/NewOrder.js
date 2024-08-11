@@ -17,12 +17,12 @@ import { haversineDistance } from "./utils";
 
 const NewOrder = () => {
   const [formData, setFormData] = useState({
-    parcelItem: "",
+    item: "",
     description: "",
     weight: "",
     destination: "",
-    recipientName: "",
-    recipientContact: "",
+    recipient_name: "",
+    recipient_contact: "",
   });
 
   const [map, setMap] = useState(null);
@@ -201,8 +201,8 @@ const NewOrder = () => {
             Parcel Item:
             <input
               type="text"
-              name="parcelItem"
-              value={formData.parcelItem}
+              name="item"
+              value={formData.item}
               onChange={handleChange}
               required
             />
