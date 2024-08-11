@@ -1,80 +1,204 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
+.myorders {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
 h1 {
-  font-family: Concert One;
-  font-weight: bold;
-  color: #65558f;
-  padding: 10px;
-  margin-left: 4vw;
+  text-align: center;
+  color: #4b0082;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  animation: textSlideIn 1s ease-out;
 }
-.new-order {
-  width: 162px;
-  height: 63px;
-  background: #65558f;
-  color: #ffffff;
-  border-radius: 10px;
+
+/* Search Bar */
+.search {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid #32cd32;
+  border-radius: 25px;
+  background-color: #f0fff0;
+  color: #4b0082;
+  font-size: 1rem;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.search:focus {
+  outline: none;
+  box-shadow: 0 0 10px #32cd32;
+}
+
+/* Button Styles */
+button {
+  padding: 0.75rem 1.5rem;
+  margin: 0.5rem;
+  border-radius: 50px;
   border: none;
-  margin-left: 5vw;
-}
-
-.search {
-  width: 360px;
-  height: 56px;
-  top: 2px;
-  left: 20vw;
-  background: #ece6f0;
-  padding: 10px;
-}
-
-.myorderscard {
-  display: inline-flex;
-  flex-direction: column;
-  border: 1px solid black;
-  width: 30vw;
-  height: 70vh;
-  padding: 10px 5px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
-  top: 5vh;
-  left: 2%;
-  margin: 10px;
-}
-
-.myorderscard span {
-  position: relative;
-  top: 5%;
-  left: -30%;
-  padding: 5px;
-}
-
-.myorderscard button {
-  position: relative;
-  left: 40%;
-  width: 50%;
-  padding: 10px;
-  padding-right: 10px;
-}
-
-.myorders button {
-  position: relative;
-}
-
-.search {
-  color: #000;
-  font-size: 16pt;
-  padding: 10px;
-  position: relative;
+  overflow: hidden;
   z-index: 1;
 }
 
-button {
-  background: #65558f;
-  color: #ffffff;
-  border: none;
-  font-weight: bold;
-  font-size: 16pt;
+.new-order {
+  background-color: #4b0082;
+  color: #fff;
+  border: 2px solid #32cd32;
 }
 
-.cancel-order,
+.new-order:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(75, 0, 130, 0.2);
+}
+
+.new-order::before {
+  content: '🚀';
+  position: absolute;
+  left: -2rem;
+  opacity: 0;
+  transition: left 0.3s ease, opacity 0.3s ease;
+}
+
+.new-order:hover::before {
+  left: 0.75rem;
+  opacity: 1;
+}
+
+.cancel-order {
+  background-color: #32cd32;
+  color: #fff;
+  border: 2px solid #4b0082;
+}
+
+.cancel-order:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(50, 205, 50, 0.2);
+}
+
+.cancel-order::before {
+  content: '❌';
+  position: absolute;
+  right: -2rem;
+  opacity: 0;
+  transition: right 0.3s ease, opacity 0.3s ease;
+}
+
+.cancel-order:hover::before {
+  right: 0.75rem;
+  opacity: 1;
+}
+
 .change-destination {
-  padding-bottom: 10px;
-  margin: 10px;
-  border-radius: 10px;
+  background-color: transparent;
+  color: #4b0082;
+  border: 2px solid #32cd32;
+  transition: background-color 0.3s ease;
+}
+
+.change-destination:hover {
+  background-color: #32cd32;
+  color: #fff;
+}
+
+/* Card Styles */
+.myorderscard {
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 2px solid #4b0082;
+  border-radius: 15px;
+  background-color: #f0fff0;
+  color: #4b0082;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  animation: cardFadeIn 1.2s ease-in-out;
+}
+
+.myorderscard:hover {
+  transform: scale(1.03);
+}
+
+.myorderscard p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.myorderscard p::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #32cd32;
+  transition: width 0.4s ease;
+}
+
+.myorderscard p:hover::after {
+  width: 100%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes textSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .myorderscard {
+    padding: 1rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
 }
