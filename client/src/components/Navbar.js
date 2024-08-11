@@ -26,7 +26,6 @@ function Navbar() {
             </NavLink>
           </li>
 
-
           {/* Conditionally render links based on user role */}
           {user && (
             <>
@@ -35,34 +34,21 @@ function Navbar() {
                   New Order
                 </NavLink>
               </li>
-
-          {/* Container for nav links */}
-          <div className="nav-links-container">
-            {/* Conditionally render links based on user role */}
-            {user && (
-              <>
-                <li>
-                  <NavLink to="/new-order" className="links">
-                    New Order
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/myorders" className="links">
-                    My Orders
-                  </NavLink>
-                </li>
-              </>
-            )}
-
-            {admin && (
-
               <li>
-                <NavLink to="/allorders" className="links">
-                  All Orders
+                <NavLink to="/myorders" className="links">
+                  My Orders
                 </NavLink>
               </li>
-            )}
-          </div>
+            </>
+          )}
+
+          {admin && (
+            <li>
+              <NavLink to="/allorders" className="links">
+                All Orders
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
 
