@@ -11,11 +11,11 @@ function MyOrdersCard({
   removeOrder,
   updateDestinations,
 }) {
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
   const [newDestination, setNewDestination] = useState(destination);
 
   function handleEdit() {
-    setEdit(false);
+    setEdit(true);
   }
 
   function handleDelete() {
@@ -27,8 +27,10 @@ function MyOrdersCard({
   }
 
   function handleSave() {
-    updateDestinations(id, newDestination);
-    setEdit(false);
+    if (newDestination.trim() !== "") {
+      updateDestinations(id, newDestination);
+      setEdit(false);
+    }
   }
 
   return (
@@ -36,29 +38,33 @@ function MyOrdersCard({
       <p>Item: {item}</p>
       <p>Description: {description}</p>
       <p>Weight: {weight}</p>
-      <p>Destination: {destination}</p>
+      <p>
+        Destination:{" "}
+        {edit ? (
+          <input
+            type="text"
+            value={newDestination}
+            onChange={handleInputChange}
+            placeholder="Enter new destination"
+          />
+        ) : (
+          destination
+        )}
+      </p>
       <p>Status: {status}</p>
-      {status === "pending" ? (
-        edit ? (
+      {status === "Pending" &&
+        (edit ? (
           <div>
-            <input
-              type="text"
-              value={newDestination}
-              onChange={handleInputChange}
-              placeholder="Enter new destination"
-            />
             <button onClick={handleSave}>Save</button>
+            <button onClick={() => setEdit(false)}>Cancel</button>
           </div>
         ) : (
-          <button onClick={handleEdit}>Change Destination</button>
-        )
-      ) : (
-        <button className="change-destination" disabled>
-          Change Destination
-        </button>
-      )}
+          <button onClick={handleEdit} className="change-destination">
+            Change Destination
+          </button>
+        ))}
       <button className="cancel-order" onClick={handleDelete}>
-        Cancel order
+        Cancel Order
       </button>
     </div>
   );

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import MyOrdersCard from "./MyOrderCard";
+import MyOrdersCard from "./MyOrderCard"; // Corrected import statement
 
 function MyOrders() {
   const [myorders, setMyOrders] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [parcels, setParcels] = useState([]);
-  const [destinations, setDestinations] = useState([]);
 
   function filterOrders(e) {
     const input = e.target.value;
@@ -29,38 +28,37 @@ function MyOrders() {
         if (orders) {
           setMyOrders(orders);
         } else {
-          console.log("failed to fetch myorders");
+          console.log("Failed to fetch my orders");
         }
       })
-      .catch((err) => console.log("fetch my order error"));
+      .catch((err) => console.log("Fetch my orders error:", err));
   }, []);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/parcels")
       .then((response) => response.json())
       .then((data) => setParcels(data))
-      .catch((err) => console.log("fetch parcel error"));
+      .catch((err) => console.log("Fetch parcel error:", err));
   }, []);
 
-  /* function orderStatus(){
-    if(parcels.parcel_status === "Pending"){
-      
-  } */
-
-  function updateDestinations() {
-    fetch("http://127.0.0.1:5000/destinations", {
+  function updateDestinations(id, newDestination) {
+    fetch(`http://127.0.0.1:5000/myorders/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ destinations }),
+      body: JSON.stringify({ destination: newDestination }),
     })
       .then((response) => response.json())
-      .then((data) => setDestinations(data))
-      .catch((err) => console.log("fetch parcel error"));
+      .then((updatedOrder) => {
+        const updatedOrders = myorders.map((order) =>
+          order.id === id ? { ...order, destination: newDestination } : order
+        );
+        setMyOrders(updatedOrders);
+        setFilteredOrders(updatedOrders);
+      })
+      .catch((err) => console.log("Error updating destination:", err));
   }
-
-  console.log(destinations);
 
   function removeOrder(id) {
     fetch(`http://127.0.0.1:5000/myorders/${id}`, {
@@ -68,21 +66,22 @@ function MyOrders() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network respose erro");
+          throw new Error("Network response error");
         }
         handleDelete(id);
       })
-      .catch((err) => console.log(err, "error deleting order"));
+      .catch((err) => console.log("Error deleting order:", err));
   }
 
   function handleDelete(id) {
     const updatedOrders = myorders.filter((order) => order.id !== id);
     setMyOrders(updatedOrders);
+    setFilteredOrders(updatedOrders);
   }
 
   return (
     <div className="myorders">
-      <h1>My Orders</h1>
+      <h1 className="my-orders">My Orders</h1>
       <Link to="/new-order">
         <button className="new-order">New Order</button>
       </Link>
@@ -98,11 +97,15 @@ function MyOrders() {
           ? filteredOrders.map((order) => (
               <MyOrdersCard
                 key={order.id}
+                id={order.id}
                 item={order.item}
                 description={order.description}
                 weight={order.weight}
                 destination={order.destination}
-                status={parcels.orderStatus}
+                status={
+                  parcels.find((parcel) => order.id === parcel.id)
+                    ?.parcel_status || "Pending"
+                }
                 removeOrder={() => removeOrder(order.id)}
                 updateDestinations={updateDestinations}
               />
@@ -110,13 +113,14 @@ function MyOrders() {
           : myorders.map((order) => (
               <MyOrdersCard
                 key={order.id}
+                id={order.id}
                 item={order.item}
                 description={order.description}
                 weight={order.weight}
                 destination={order.destination}
                 status={
                   parcels.find((parcel) => order.id === parcel.id)
-                    ?.parcel_status
+                    ?.parcel_status || "Pending"
                 }
                 removeOrder={() => removeOrder(order.id)}
                 updateDestinations={updateDestinations}
