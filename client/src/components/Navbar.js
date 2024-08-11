@@ -26,6 +26,16 @@ function Navbar() {
             </NavLink>
           </li>
 
+
+          {/* Conditionally render links based on user role */}
+          {user && (
+            <>
+              <li>
+                <NavLink to="/new-order" className="links">
+                  New Order
+                </NavLink>
+              </li>
+
           {/* Container for nav links */}
           <div className="nav-links-container">
             {/* Conditionally render links based on user role */}
@@ -45,6 +55,7 @@ function Navbar() {
             )}
 
             {admin && (
+
               <li>
                 <NavLink to="/allorders" className="links">
                   All Orders

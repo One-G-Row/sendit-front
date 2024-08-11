@@ -6,8 +6,9 @@ function MyOrders() {
   const [myorders, setMyOrders] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
-  const [status, setStatus] = useState([]);
-  
+  const [parcels, setParcels] = useState([]);
+  const [destinations, setDestinations] = useState([]);
+
   function filterOrders(e) {
     const input = e.target.value;
     setSearch(input);
@@ -35,8 +36,31 @@ function MyOrders() {
   }, []);
 
   useEffect(() => {
-    fetch("")
-  })
+    fetch("http://127.0.0.1:5000/parcels")
+      .then((response) => response.json())
+      .then((data) => setParcels(data))
+      .catch((err) => console.log("fetch parcel error"));
+  }, []);
+
+  /* function orderStatus(){
+    if(parcels.parcel_status === "Pending"){
+      
+  } */
+
+  function updateDestinations() {
+    fetch("http://127.0.0.1:5000/destinations", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ destinations }),
+    })
+      .then((response) => response.json())
+      .then((data) => setDestinations(data))
+      .catch((err) => console.log("fetch parcel error"));
+  }
+
+  console.log(destinations);
 
   function removeOrder(id) {
     fetch(`http://127.0.0.1:5000/myorders/${id}`, {
@@ -55,27 +79,12 @@ function MyOrders() {
     const updatedOrders = myorders.filter((order) => order.id !== id);
     setMyOrders(updatedOrders);
   }
-  /* 
-  const ordersArr = Object.entries(myorders).map(
-    ([key, item, description, weight, destination]) => [
-      key,
-      item,
-      description,
-      weight,
-      destination,
-    ]
-  );
-  //console.log(ordersArr);
-
-  const orderValues = Object.values(myorders);
-   */
-  console.log(filteredOrders);
 
   return (
     <div className="myorders">
       <h1>My Orders</h1>
       <Link to="/new-order">
-        <button>New Order</button>
+        <button className="new-order">New Order</button>
       </Link>
       <input
         type="text"
@@ -93,8 +102,9 @@ function MyOrders() {
                 description={order.description}
                 weight={order.weight}
                 destination={order.destination}
-                status={order.status}
+                status={parcels.orderStatus}
                 removeOrder={() => removeOrder(order.id)}
+                updateDestinations={updateDestinations}
               />
             ))
           : myorders.map((order) => (
@@ -104,8 +114,12 @@ function MyOrders() {
                 description={order.description}
                 weight={order.weight}
                 destination={order.destination}
-                status={order.status}
+                status={
+                  parcels.find((parcel) => order.id === parcel.id)
+                    ?.parcel_status
+                }
                 removeOrder={() => removeOrder(order.id)}
+                updateDestinations={updateDestinations}
               />
             ))}
       </div>
