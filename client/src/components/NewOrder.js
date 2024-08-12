@@ -77,6 +77,17 @@ const NewOrder = () => {
       console.error("Failed to create order");
       setResponseMessage("Failed to create order");
     }
+    
+   /*  const response2 = await fetch("http://127.0.0.1:5000/parcels", {
+        method : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+      const parcelData = await response2.json()
+      console.log(parcelData) */
+     /* .catch((err) => console.log(err)) */
   };
 
   const handleSearch = async () => {
