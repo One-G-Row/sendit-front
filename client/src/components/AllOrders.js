@@ -168,26 +168,6 @@ const AllOrders = () => {
         </div>
       )}
 
-      <div className="card-container">
-        {parcels.map(parcel => (
-          <Card key={parcel.id} className="parcel-card">
-            <Card.Body>
-              <Card.Title>Parcel ID: {parcel.id}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Item: {parcel.parcel_item}</Card.Subtitle>
-              <Card.Text>
-                Description: {parcel.parcel_description}<br />
-                Weight: {parcel.parcel_weight}<br />
-                Cost: {parcel.parcel_cost}<br />
-                Status: {parcel.parcel_status}<br />
-                Destination ID: {parcel.destination_id}
-              </Card.Text>
-              <Button variant="primary" onClick={() => handleParcelSelect(parcel)}>
-                Select Parcel
-              </Button>
-            </Card.Body>
-          </Card>
-        ))}
-      </div>
     </div>
   );
 };
