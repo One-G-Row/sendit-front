@@ -5,10 +5,12 @@ import "./AllOrders.css";
 const AllOrders = () => {
   const [parcels, setParcels] = useState([]);
   const [selectedParcel, setSelectedParcel] = useState(null);
-  const [status, setStatus] = useState("");
-  const [destination, setDestination] = useState("");
-  const [error, setError] = useState("");
+  const [status, setStatus] = useState('');
+  const [destination, setDestination] = useState('');
+  const [error, setError] = useState('');
   const [orders, setOrders] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
+
 
   useEffect(() => {
     const fetchParcels = async () => {
@@ -26,7 +28,7 @@ const AllOrders = () => {
     };
 
     fetchParcels();
-  }, []);
+  }, [selectedParcel]);  // Re-fetch parcels when selectedParcel changes
 
   fetch("http://127.0.0.1:5000/myorders")
     .then((response) => response.json())
@@ -62,14 +64,35 @@ const AllOrders = () => {
         const updatedData = await response.json();
 
         // Update the parcel list with the updated data
+
         setParcels(
           parcels.map((parcel) =>
             parcel.id === updatedData.id ? updatedData : parcel
           )
         );
 
-        // Update the selected parcel to reflect the new status and destination
-        setSelectedParcel(updatedData);
+        setParcels(
+          parcels.map((parcel) =>
+            parcel.id === updatedData.id ? updatedData : parcel
+          )
+        )
+        setParcels((prevParcels) =>
+          prevParcels.map((parcel) =>
+            parcel.id === updatedData.id ? updatedData : parcel
+          )
+        );
+
+        // Clear selected parcel to trigger re-render
+        setSelectedParcel(null);
+
+        // Display success message
+        setSuccessMessage('Parcel updated successfully!');
+
+        // Clear success message after a few seconds
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 3000); // Adjust the duration as needed
+
       } catch (error) {
         console.error("Error updating parcel:", error);
         setError("Failed to update parcel");
@@ -113,6 +136,8 @@ const AllOrders = () => {
             </Card>
           ))}
       </div>
+      {successMessage && <div className="success-message">{successMessage}</div>}
+
 
       {selectedParcel && (
         <div className="update-section">
@@ -132,7 +157,7 @@ const AllOrders = () => {
               <Form.Control
                 type="text"
                 placeholder="Update Destination ID"
-                value={destination}
+                value={destination}  // Set to the value of selected parcel's destination ID
                 onChange={(e) => setDestination(e.target.value)}
               />
             </Form.Group>
@@ -142,6 +167,27 @@ const AllOrders = () => {
           </Form>
         </div>
       )}
+
+      <div className="card-container">
+        {parcels.map(parcel => (
+          <Card key={parcel.id} className="parcel-card">
+            <Card.Body>
+              <Card.Title>Parcel ID: {parcel.id}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">Item: {parcel.parcel_item}</Card.Subtitle>
+              <Card.Text>
+                Description: {parcel.parcel_description}<br />
+                Weight: {parcel.parcel_weight}<br />
+                Cost: {parcel.parcel_cost}<br />
+                Status: {parcel.parcel_status}<br />
+                Destination ID: {parcel.destination_id}
+              </Card.Text>
+              <Button variant="primary" onClick={() => handleParcelSelect(parcel)}>
+                Select Parcel
+              </Button>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };

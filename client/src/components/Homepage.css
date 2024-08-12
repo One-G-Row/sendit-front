@@ -11,15 +11,9 @@
 
 .content {
   max-width: 600px;
+  margin-top: -100px;
 }
 
-h1 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700px;
-  font-size: 2.5rem;
-  color: #333333;
-  margin-bottom: 5rem;
-}
 
 p {
   font-family: 'Poppins', sans-serif;
@@ -67,11 +61,28 @@ p {
 .image-container {
   max-width: 40%;
   text-align: right;
+  margin-right: 30px;
 }
 
 .image-container img {
-  width: 100%;
+  width: 800px;
   height: auto;
   object-fit: cover;
   border-radius: 10px;
+}
+
+
+.header {
+  color: #81B622;
+  font-size: 70px;
+  padding-bottom: -5px;
+  margin-top: -30px;
+}
+
+.sendit-text { 
+  color: #6B3FA0;
+  font-size: 90px;
+  margin-bottom: 40px;
+  font-style: italic;
+  font-weight: bold;
 }
