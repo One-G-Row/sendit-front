@@ -13,7 +13,8 @@ function Homepage() {
   return (
     <div className="homepage">
       <div className="content">
-        <h1>Welcome to SendIT</h1>
+        <h1 className="header">Welcome to</h1>
+        <h1 className="sendit-text">SendIT</h1>
         <p>
           Your trusted partner in seamless parcel deliveries. We offer reliable
           and efficient courier services tailored to meet your needs, ensuring
