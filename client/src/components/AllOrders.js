@@ -8,6 +8,7 @@ const AllOrders = () => {
   const [status, setStatus] = useState('');
   const [destination, setDestination] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const fetchParcels = async () => {
@@ -25,7 +26,7 @@ const AllOrders = () => {
     };
 
     fetchParcels();
-  }, []);
+  }, [selectedParcel]);  // Re-fetch parcels when selectedParcel changes
 
   const handleParcelSelect = (parcel) => {
     setSelectedParcel(parcel);
@@ -53,12 +54,23 @@ const AllOrders = () => {
         const updatedData = await response.json();
 
         // Update the parcel list with the updated data
-        setParcels(parcels.map(parcel =>
-          parcel.id === updatedData.id ? updatedData : parcel
-        ));
+        setParcels((prevParcels) =>
+          prevParcels.map((parcel) =>
+            parcel.id === updatedData.id ? updatedData : parcel
+          )
+        );
 
-        // Update the selected parcel to reflect the new status and destination
-        setSelectedParcel(updatedData);
+        // Clear selected parcel to trigger re-render
+        setSelectedParcel(null);
+
+        // Display success message
+        setSuccessMessage('Parcel updated successfully!');
+
+        // Clear success message after a few seconds
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 3000); // Adjust the duration as needed
+
       } catch (error) {
         console.error('Error updating parcel:', error);
         setError('Failed to update parcel');
@@ -70,6 +82,37 @@ const AllOrders = () => {
     <div className="all-orders">
       <h1>All Orders</h1>
       {error && <div className="error-message">{error}</div>}
+      {successMessage && <div className="success-message">{successMessage}</div>}
+
+      {selectedParcel && (
+        <div className="update-section">
+          <h2>Update Parcel {selectedParcel.id}</h2>
+          <Form>
+            <Form.Group>
+              <Form.Label>Status</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Update Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Destination ID</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Update Destination ID"
+                value={destination}  // Set to the value of selected parcel's destination ID
+                onChange={(e) => setDestination(e.target.value)}
+              />
+            </Form.Group>
+            <Button variant="primary" onClick={handleUpdate}>
+              Update Parcel
+            </Button>
+          </Form>
+        </div>
+      )}
+
       <div className="card-container">
         {parcels.map(parcel => (
           <Card key={parcel.id} className="parcel-card">
@@ -90,35 +133,6 @@ const AllOrders = () => {
           </Card>
         ))}
       </div>
-
-      {selectedParcel && (
-        <div className="update-section">
-          <h2>Update Parcel {selectedParcel.id}</h2>
-          <Form>
-            <Form.Group>
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Update Status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Destination ID</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Update Destination ID"
-                value={destination}
-                onChange={(e) => setDestination(e.target.value)}
-              />
-            </Form.Group>
-            <Button variant="primary" onClick={handleUpdate}>
-              Update Parcel
-            </Button>
-          </Form>
-        </div>
-      )}
     </div>
   );
 };
