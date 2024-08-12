@@ -304,11 +304,7 @@ const NewOrder = () => {
         <div className="map-container" id="map"></div>
 
         <div className="price-container">
-          <button
-            className="checkout-button"
-          >
-            Checkout
-          </button>
+          
           {price !== null && (
             <div className="price-info">
               Estimated Price: KES {price.toFixed(2)}
