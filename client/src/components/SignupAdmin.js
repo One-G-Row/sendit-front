@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import './SignupAdmin.css';
 
 const AdminRegister = () => {
@@ -10,6 +11,7 @@ const AdminRegister = () => {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -35,6 +37,9 @@ const AdminRegister = () => {
       const data = await response.json();
       if (response.ok) {
         setSuccess('Admin registered successfully!');
+        setTimeout(() => {
+          navigate('/loginadmin');  // Redirect to login page after 2 seconds
+        }, 2000);
       } else {
         setError(data.message || 'An error occurred');
       }

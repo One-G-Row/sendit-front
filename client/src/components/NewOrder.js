@@ -89,6 +89,14 @@ const NewOrder = () => {
       console.error("Error:", error);
       setResponseMessage("Failed to create order due to network error.");
     }
+
+    const response2 = await fetch("http://127.0.0.1:5000/parcels", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    }).catch((err) => console.log(err));
   };
 
   const handleSearch = async () => {
@@ -252,10 +260,7 @@ const NewOrder = () => {
             />
           </label>
           <br />
-          <button
-            type="submit"
-            className="submit-button"
-          >
+          <button type="submit" className="submit-button">
             Submit
           </button>
           <button
@@ -299,6 +304,11 @@ const NewOrder = () => {
         <div className="map-container" id="map"></div>
 
         <div className="price-container">
+          <button
+            className="checkout-button"
+          >
+            Checkout
+          </button>
           {price !== null && (
             <div className="price-info">
               Estimated Price: KES {price.toFixed(2)}
