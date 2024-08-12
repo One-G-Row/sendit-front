@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SignupUser.css';
 
 const SignupUser = () => {
@@ -10,6 +11,7 @@ const SignupUser = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({
@@ -42,6 +44,9 @@ const SignupUser = () => {
                     email: '',
                     password: ''
                 });
+                setTimeout(() => {
+                    navigate('/loginuser');  // Redirect to login page after 2 seconds
+                  }, 2000);
             } else {
                 setError(data.message || 'An error occurred');
             }
