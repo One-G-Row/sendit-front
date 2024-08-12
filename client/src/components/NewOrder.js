@@ -60,22 +60,34 @@ const NewOrder = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
-    const response = await fetch("http://127.0.0.1:5000/myorders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    // Form validation
+    for (let key in formData) {
+      if (!formData[key]) {
+        setResponseMessage(`Please fill out the ${key.replace("_", " ")} field.`);
+        return;
+      }
+    }
 
-    if (response.ok) {
-      console.log("Order created successfully");
-      setResponseMessage("Order created successfully");
-    } else {
-      console.error("Failed to create order");
-      setResponseMessage("Failed to create order");
+    try {
+      const response = await fetch("http://127.0.0.1:5000/myorders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log("Order created successfully");
+        setResponseMessage("Order created successfully");
+      } else {
+        console.error("Failed to create order");
+        setResponseMessage("Failed to create order");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setResponseMessage("Failed to create order due to network error.");
     }
   };
 
@@ -287,11 +299,6 @@ const NewOrder = () => {
         <div className="map-container" id="map"></div>
 
         <div className="price-container">
-          <button
-            className="checkout-button"
-          >
-            Checkout
-          </button>
           {price !== null && (
             <div className="price-info">
               Estimated Price: KES {price.toFixed(2)}

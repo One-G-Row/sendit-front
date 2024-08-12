@@ -112,13 +112,17 @@
 
 .heading {
   color: #65558f;
-  font-weight: 100; /* Corrected font-weight */
+  font-weight: 100; 
   padding-bottom: 30px;
 }
 
 .recipient-header {
   color: #65558f;
-  font-weight: 100; /* Corrected font-weight */
+  font-weight: 100; 
   padding-bottom: 30px;
   padding-top: 20px;
+}
+
+.form-validation-message {
+  color: red;
 }
