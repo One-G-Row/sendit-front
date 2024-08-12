@@ -1,48 +1,124 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    color: #4B0082;
-  }
-  
-  h1, h2 {
-    color: #4B0082;
-  }
-  
-  label {
-    font-family: 'Arial', sans-serif;
-    color: #4B0082;
-    margin-top: 10px;
-  }
-  
-  input, textarea {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #4B0082;
-  }
-  
-  button {
-    background-color: #729e45;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
-  }
-  
-  button:hover {
-    background-color: #3a0066;
-  }
-  
-  #map {
-    width: 100%;
-    height: 300px;
-    border: 1px solid #4B0082;
-  }
-  
-  div {
-    font-family: 'Arial', sans-serif;
-  }
-  
+.new-order-container {
+  display: flex;
+  padding: 20px;
+}
+
+.form-container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.form-container h1 {
+  margin-bottom: 20px;
+  color: #65558f; /* Matching color for headers */
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.form-container input,
+.form-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  font-size: 16px;
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+  border-color: #81B622;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(129, 182, 34, 0.2);
+}
+
+.submit-button,
+.search-button,
+.checkout-button {
+  background-color: #81B622;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover,
+.search-button:hover,
+.checkout-button:hover {
+  background-color: #65558f;
+}
+
+.search-button {
+  margin-left: 10px;
+}
+
+.recipient-details {
+  flex: 1;
+}
+
+.recipient-details h2 {
+  color: #65558f;
+  font-weight: bold; /* Make header bold for consistency */
+  margin-bottom: 20px;
+}
+
+.recipient-details label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold; /* Consistent with other form labels */
+}
+
+.recipient-details input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  font-size: 16px;
+}
+
+.recipient-details input:focus {
+  border-color: #81B622;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(129, 182, 34, 0.2);
+}
+
+.map-container {
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+}
+
+.price-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.price-info,
+.distance-info {
+  color: #81B622;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.heading {
+  color: #65558f;
+  font-weight: 100; /* Corrected font-weight */
+  padding-bottom: 30px;
+}
+
+.recipient-header {
+  color: #65558f;
+  font-weight: 100; /* Corrected font-weight */
+  padding-bottom: 30px;
+  padding-top: 20px;
+}

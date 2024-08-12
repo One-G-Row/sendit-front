@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./NewOrder.css"
+import "./NewOrder.css";
 import Map from "ol/Map";
 import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
@@ -193,9 +193,9 @@ const NewOrder = () => {
   };
 
   return (
-    <div style={{ display: "flex", padding: "20px" }}>
-      <div style={{ flex: 1, marginRight: "20px" }}>
-        <h1>New Order</h1>
+    <div className="new-order-container">
+      <div className="form-container">
+        <h1 className="heading">New Order</h1>
         <form onSubmit={handleSubmit}>
           <label>
             Parcel Item:
@@ -242,42 +242,29 @@ const NewOrder = () => {
           <br />
           <button
             type="submit"
-            style={{
-              backgroundColor: "#4B0082",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "5px",
-            }}
+            className="submit-button"
           >
             Submit
           </button>
           <button
             type="button"
             onClick={handleSearch}
-            style={{
-              backgroundColor: "#4B0082",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "5px",
-              marginLeft: "10px",
-            }}
+            className="search-button"
           >
             Search Destination
           </button>
         </form>
       </div>
 
-      <div style={{ flex: 1 }}>
-        <h2>Recipient Details</h2>
+      <div className="recipient-details">
+        <h2 className="recipient-header">Recipient Details</h2>
         <form>
           <label>
             Recipient Name:
             <input
               type="text"
-              name="recipientName"
-              value={formData.recipientName}
+              name="recipient_name"
+              value={formData.recipient_name}
               onChange={handleChange}
               required
             />
@@ -287,8 +274,8 @@ const NewOrder = () => {
             Recipient Contact:
             <input
               type="text"
-              name="recipientContact"
-              value={formData.recipientContact}
+              name="recipient_contact"
+              value={formData.recipient_contact}
               onChange={handleChange}
               required
             />
@@ -297,39 +284,21 @@ const NewOrder = () => {
           <p>{responseMessage}</p>
         </form>
 
-        <div
-          id="map"
-          style={{ width: "100%", height: "200px", marginTop: "20px" }}
-        ></div>
+        <div className="map-container" id="map"></div>
 
-        <div
-          style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
-        >
+        <div className="price-container">
           <button
-            style={{
-              backgroundColor: "#4B0082",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "5px",
-              marginRight: "10px",
-            }}
+            className="checkout-button"
           >
             Checkout
           </button>
           {price !== null && (
-            <div
-              style={{
-                color: "#6A0D91",
-                fontSize: "18px",
-                marginRight: "10px",
-              }}
-            >
+            <div className="price-info">
               Estimated Price: KES {price.toFixed(2)}
             </div>
           )}
           {distance !== null && (
-            <div style={{ color: "#6A0D91", fontSize: "18px" }}>
+            <div className="distance-info">
               Distance: {distance.toFixed(2)} km
             </div>
           )}
