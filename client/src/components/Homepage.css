@@ -73,7 +73,7 @@ p {
 
 
 .header {
-  color: #81B622;
+  color: #81B622 !important;
   font-size: 70px;
   padding-bottom: -5px;
   margin-top: -30px;

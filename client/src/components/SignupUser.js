@@ -57,7 +57,7 @@ const SignupUser = () => {
 
     return (
         <div className="signup-container">
-            <h1>Register</h1>
+            <h1>Sign up</h1>
             {error && <p className="error">{error}</p>}
             {success && <p className="success">{success}</p>}
             <form className="signup-form" onSubmit={handleSubmit}>

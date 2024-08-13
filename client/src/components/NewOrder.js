@@ -22,9 +22,9 @@ const NewOrder = () => {
   const [responseMessage, setResponseMessage] = useState("");
   const [postPrice, setPostPrice] = useState({ price });
 
-  const priceValue = Object.values(postPrice);
+  /* const priceValue = Object.values(postPrice);
   console.log(typeof priceValue);
-  const int = parseInt(priceValue);
+  const int = parseInt(priceValue); */
 
   const [formData, setFormData] = useState({
     item: "",
@@ -38,14 +38,6 @@ const NewOrder = () => {
 
   console.log(formData);
 
-  const [parcelsFormData, setParcelsFormData] = useState({
-    parcel_item: "",
-    parcel_description: "",
-    parcel_weight: "",
-    parcel_cost: "",
-    parcel_status: "",
-    /* destination: "",  */
-  });
 
   useEffect(() => {
     const initialMap = new Map({
@@ -98,32 +90,6 @@ const NewOrder = () => {
       setResponseMessage("Failed to create order");
     }
 
-    /*  const response2 = await fetch("http://127.0.0.1:5000/myorders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postPrice),
-      }); */
-
-    /*  const response2 = await fetch("http://127.0.0.1:5000/parcels", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(parcelsFormData),
-      });
-
-      if (!response2.ok) {
-        throw new Error("Failed to create parcel");
-      }
-      const parcelsData = await response2.json();
-      console.log("Parcel created successfully");
-      setResponseMessage("Parcel created successfully");
-    } catch (error) {
-      console.error(error);
-      setResponseMessage(error.message);
-    } */
   };
   const handleSearch = async () => {
     const destination = formData.destination;

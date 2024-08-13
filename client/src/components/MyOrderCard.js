@@ -7,6 +7,7 @@ function MyOrdersCard({
   description,
   weight,
   destination,
+  cost,
   status,
   removeOrder,
   updateDestinations,
@@ -51,6 +52,7 @@ function MyOrdersCard({
           destination
         )}
       </p>
+      <p>Cost: {cost}</p>
       <p>Status: {status}</p>
       {status === "Pending" &&
         (edit ? (
