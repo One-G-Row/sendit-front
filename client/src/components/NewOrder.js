@@ -21,8 +21,18 @@ const NewOrder = () => {
     description: "",
     weight: "",
     destination: "",
+    cost: "",
     recipient_name: "",
     recipient_contact: "",
+  });
+
+  const [parcelsFormData, setParcelsFormData] = useState({
+    parcel_item: "",
+    parcel_description: "",
+    parcel_weight: "",
+    parcel_cost: "",
+    parcel_status: "",
+    destination: "", 
   });
 
   const [map, setMap] = useState(null);
@@ -61,6 +71,25 @@ const NewOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    try {
+      const response = await fetch("http://127.0.0.1:5000/myorders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const orderData = await response.json();
+        console.log("Order created successfully");
+        setResponseMessage("Order created successfully");
+      } else {
+        console.error("Failed to create order");
+        setResponseMessage("Failed to create order");
+      }
+
+      const response2 = await fetch("http://127.0.0.1:5000/parcels", {
     // Form validation
     for (let key in formData) {
       if (!formData[key]) {
@@ -75,8 +104,10 @@ const NewOrder = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+
+        body: JSON.stringify(parcelsFormData),
       });
+
 
       if (response.ok) {
         console.log("Order created successfully");
@@ -90,15 +121,17 @@ const NewOrder = () => {
       setResponseMessage("Failed to create order due to network error.");
     }
 
-    const response2 = await fetch("http://127.0.0.1:5000/parcels", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    }).catch((err) => console.log(err));
+      if (!response2.ok) {
+        throw new Error("Failed to create parcel");
+      }
+      const parcelsData = await response2.json();
+      console.log("Parcel created successfully");
+      setResponseMessage("Parcel created successfully");
+    } catch (error) {
+      console.error(error);
+      setResponseMessage(error.message);
+    }
   };
-
   const handleSearch = async () => {
     const destination = formData.destination;
     console.log("Searching for destination:", destination);

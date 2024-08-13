@@ -5,6 +5,7 @@ import "./AllOrders.css";
 const AllOrders = () => {
   const [parcels, setParcels] = useState([]);
   const [selectedParcel, setSelectedParcel] = useState(null);
+
   const [status, setStatus] = useState('');
   const [destination, setDestination] = useState('');
   const [error, setError] = useState('');
@@ -12,6 +13,7 @@ const AllOrders = () => {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+
 
   useEffect(() => {
     const fetchParcels = async () => {
@@ -29,7 +31,8 @@ const AllOrders = () => {
     };
 
     fetchParcels();
-  }, [selectedParcel]);
+  }, [selectedParcel]); // Re-fetch parcels when selectedParcel changes
+
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -92,12 +95,26 @@ const AllOrders = () => {
           )
         );
 
+        setParcels(
+          parcels.map((parcel) =>
+            parcel.id === updatedData.id ? updatedData : parcel
+          )
+        );
+        setParcels((prevParcels) =>
+          prevParcels.map((parcel) =>
+            parcel.id === updatedData.id ? updatedData : parcel
+          )
+        );
+
+        // Clear selected parcel to trigger re-render
         setSelectedParcel(null);
-        setSuccessMessage('Parcel updated successfully!');
+
+        // Display success message
+        setSuccessMessage("Parcel updated successfully!")
 
         setTimeout(() => {
-          setSuccessMessage('');
-        }, 3000);
+          setSuccessMessage("");
+        }, 3000); // Adjust the duration as needed
 
       } catch (error) {
         console.error("Error updating parcel:", error);
@@ -114,11 +131,52 @@ const AllOrders = () => {
 
   return (
     <div className="all-orders">
+      <h1>All Orders</h1>
+      {error && <div className="error-message">{error}</div>}
+      <div className="card-container">
+        {orders &&
+          orders.map((order) => (
+            <Card key={order.id} className="parcel-card">
+              <Card.Body>
+                <Card.Title>Parcel ID: {order.id}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  Item: {order.item}
+                </Card.Subtitle>
+                <Card.Text>
+                  Description: {order.description}
+                  <br />
+                  Weight: {order.weight}
+                  <br />
+                  Cost:{" "}
+                  {parcels.find((parcel) => parcel.id === order.id)
+                    ?.parcel_cost || null}
+                  <br />
+                  Status:{" "}
+                  {parcels.find((parcel) => parcel.id === order.id)
+                    ?.parcel_status || null}
+                  <br />
+                  Destination ID: {order.destination}
+                </Card.Text>
+                <Button
+                  variant="primary"
+                  onClick={() => handleParcelSelect(order)}
+                >
+                  Select Parcel
+                </Button>
+              </Card.Body>
+            </Card>
+          ))}
+      </div>
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
+      
       <h1 className="all-orders__title">All Orders</h1>
       {error && <div className="all-orders__error-message">{error}</div>}
       {successMessage && <div className="all-orders__success-message">{successMessage}</div>}
       
       {/* Update Parcel Section moved to the top */}
+
       {selectedParcel && (
         <div className="all-orders__update-section">
           <h2 className="all-orders__update-title">Update Parcel {selectedParcel.id}</h2>
@@ -138,7 +196,9 @@ const AllOrders = () => {
               <Form.Control
                 type="text"
                 placeholder="Update Destination ID"
-                value={destination}
+                value={destination} 
+
+
                 onChange={(e) => setDestination(e.target.value)}
                 className="all-orders__form-control"
               />
@@ -162,6 +222,7 @@ const AllOrders = () => {
           </Form>
         </div>
       )}
+
 
       <Form.Group className="all-orders__search" controlId="search">
         <Form.Control
