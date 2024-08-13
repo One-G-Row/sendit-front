@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
 import { useAuth } from "./AuthContext";
 import "./Navbar.css";
@@ -7,6 +7,7 @@ import "./Navbar.css";
 function Navbar() {
   const { user, admin, logout } = useAuth(); // Assume `logout` is a function from your auth context
   const [logoutMessage, setLogoutMessage] = useState(""); // State to manage logout message
+  const location = useLocation(); // Get current location
 
   const handleLogout = () => {
     logout();
@@ -26,8 +27,8 @@ function Navbar() {
             </NavLink>
           </li>
 
-          {/* Conditionally render links based on user role */}
-          {user && (
+          {/* Conditionally render links based on the current route */}
+          {user && location.pathname !== "/allorders" && (
             <>
               <li>
                 <NavLink to="/new-order" className="links">

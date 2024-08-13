@@ -5,7 +5,6 @@ import "./AllOrders.css";
 const AllOrders = () => {
   const [parcels, setParcels] = useState([]);
   const [selectedParcel, setSelectedParcel] = useState(null);
-
   const [status, setStatus] = useState('');
   const [destination, setDestination] = useState('');
   const [error, setError] = useState('');
@@ -13,7 +12,6 @@ const AllOrders = () => {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-
 
   useEffect(() => {
     const fetchParcels = async () => {
@@ -33,11 +31,13 @@ const AllOrders = () => {
     fetchParcels();
   }, [selectedParcel]); // Re-fetch parcels when selectedParcel changes
 
-
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await fetch("http://127.0.0.1:5000/myorders");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
         const data = await response.json();
         setOrders(data);
         setFilteredOrders(data);
@@ -89,28 +89,15 @@ const AllOrders = () => {
         }
         const updatedData = await response.json();
 
-        setParcels(
-          parcels.map((parcel) =>
-            parcel.id === updatedData.id ? updatedData : parcel
-          )
-        );
-
-        setParcels(
-          parcels.map((parcel) =>
-            parcel.id === updatedData.id ? updatedData : parcel
-          )
-        );
-        setParcels((prevParcels) =>
-          prevParcels.map((parcel) =>
-            parcel.id === updatedData.id ? updatedData : parcel
-          )
-        );
+        setParcels(parcels.map((parcel) =>
+          parcel.id === updatedData.id ? updatedData : parcel
+        ));
 
         // Clear selected parcel to trigger re-render
         setSelectedParcel(null);
 
         // Display success message
-        setSuccessMessage("Parcel updated successfully!")
+        setSuccessMessage("Parcel updated successfully!");
 
         setTimeout(() => {
           setSuccessMessage("");
@@ -133,49 +120,47 @@ const AllOrders = () => {
     <div className="all-orders">
       <h1>All Orders</h1>
       {error && <div className="error-message">{error}</div>}
-      <div className="card-container">
-        {orders &&
-          orders.map((order) => (
-            <Card key={order.id} className="parcel-card">
-              <Card.Body>
-                <Card.Title>Parcel ID: {order.id}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Item: {order.item}
-                </Card.Subtitle>
-                <Card.Text>
-                  Description: {order.description}
-                  <br />
-                  Weight: {order.weight}
-                  <br />
-                  Cost:{" "}
-                  {parcels.find((parcel) => parcel.id === order.id)
-                    ?.parcel_cost || null}
-                  <br />
-                  Status:{" "}
-                  {parcels.find((parcel) => parcel.id === order.id)
-                    ?.parcel_status || null}
-                  <br />
-                  Destination ID: {order.destination}
-                </Card.Text>
-                <Button
-                  variant="primary"
-                  onClick={() => handleParcelSelect(order)}
-                >
-                  Select Parcel
-                </Button>
-              </Card.Body>
-            </Card>
-          ))}
+      {successMessage && <div className="success-message">{successMessage}</div>}
+
+      <Form.Group className="all-orders__search" controlId="search">
+        <Form.Control
+          type="text"
+          placeholder="Search orders..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </Form.Group>
+
+      <div className="all-orders__card-container">
+        {filteredOrders.map((order) => (
+          <Card key={order.id} className="all-orders__parcel-card">
+            <Card.Body>
+              <Card.Title className="all-orders__card-title">Parcel ID: {order.id}</Card.Title>
+              <Card.Subtitle className="all-orders__card-subtitle mb-2 text-muted">
+                Item: {order.item}
+              </Card.Subtitle>
+              <Card.Text className="all-orders__card-text">
+                Description: {order.description}
+                <br />
+                Weight: {order.weight}
+                <br />
+                Cost: {parcels.find((parcel) => parcel.id === order.id)?.parcel_cost || "N/A"}
+                <br />
+                Status: {parcels.find((parcel) => parcel.id === order.id)?.parcel_status || "N/A"}
+                <br />
+                Destination: {order.destination}
+              </Card.Text>
+              <Button
+                variant="primary"
+                onClick={() => handleParcelSelect(order)}
+                className="all-orders__select-button"
+              >
+                Select Parcel
+              </Button>
+            </Card.Body>
+          </Card>
+        ))}
       </div>
-      {successMessage && (
-        <div className="success-message">{successMessage}</div>
-      )}
-      
-      <h1 className="all-orders__title">All Orders</h1>
-      {error && <div className="all-orders__error-message">{error}</div>}
-      {successMessage && <div className="all-orders__success-message">{successMessage}</div>}
-      
-      {/* Update Parcel Section moved to the top */}
 
       {selectedParcel && (
         <div className="all-orders__update-section">
@@ -196,9 +181,7 @@ const AllOrders = () => {
               <Form.Control
                 type="text"
                 placeholder="Update Destination ID"
-                value={destination} 
-
-
+                value={destination}
                 onChange={(e) => setDestination(e.target.value)}
                 className="all-orders__form-control"
               />
@@ -222,48 +205,6 @@ const AllOrders = () => {
           </Form>
         </div>
       )}
-
-
-      <Form.Group className="all-orders__search" controlId="search">
-        <Form.Control
-          type="text"
-          placeholder="Search orders..."
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-      </Form.Group>
-
-      <div className="all-orders__card-container">
-        {filteredOrders &&
-          filteredOrders.map((order) => (
-            <Card key={order.id} className="all-orders__parcel-card">
-              <Card.Body>
-                <Card.Title className="all-orders__card-title">Parcel ID: {order.id}</Card.Title>
-                <Card.Subtitle className="all-orders__card-subtitle mb-2 text-muted">
-                  Item: {order.item}
-                </Card.Subtitle>
-                <Card.Text className="all-orders__card-text">
-                  Description: {order.description}
-                  <br />
-                  Weight: {order.weight}
-                  <br />
-                  Cost: {order.cost}
-                  <br />
-                  Status: {parcels.find((parcel) => parcel.id === order.id)?.parcel_status || "N/A"}
-                  <br />
-                  Destination: {order.destination}
-                </Card.Text>
-                <Button
-                  variant="primary"
-                  onClick={() => handleParcelSelect(order)}
-                  className="all-orders__select-button"
-                >
-                  Select Parcel
-                </Button>
-              </Card.Body>
-            </Card>
-          ))}
-      </div>
     </div>
   );
 };
