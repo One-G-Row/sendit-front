@@ -70,7 +70,6 @@ const NewOrder = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     try {
       const response = await fetch("http://127.0.0.1:5000/myorders", {
@@ -91,12 +90,36 @@ const NewOrder = () => {
       }
 
       const response2 = await fetch("http://127.0.0.1:5000/parcels", {
+    // Form validation
+    for (let key in formData) {
+      if (!formData[key]) {
+        setResponseMessage(`Please fill out the ${key.replace("_", " ")} field.`);
+        return;
+      }
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/myorders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify(parcelsFormData),
       });
+
+
+      if (response.ok) {
+        console.log("Order created successfully");
+        setResponseMessage("Order created successfully");
+      } else {
+        console.error("Failed to create order");
+        setResponseMessage("Failed to create order");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setResponseMessage("Failed to create order due to network error.");
+    }
 
       if (!response2.ok) {
         throw new Error("Failed to create parcel");
@@ -261,13 +284,19 @@ const NewOrder = () => {
           <br />
           <label>
             Destination:
-            <input
-              type="text"
+            <select
               name="destination"
               value={formData.destination}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select a destination</option>
+              <option value="Nairobi">Nairobi</option>
+              <option value="Mombasa">Mombasa</option>
+              <option value="Kisumu">Kisumu</option>
+              <option value="Nakuru">Nakuru</option>
+              <option value="Eldoret">Eldoret</option>
+            </select>
           </label>
           <br />
           <button type="submit" className="submit-button">
@@ -280,6 +309,18 @@ const NewOrder = () => {
           >
             Search Destination
           </button>
+          <div className="price-container">
+            {price !== null && (
+              <div className="price-info">
+                Estimated Price: KES {price.toFixed(2)}
+              </div>
+            )}
+            {distance !== null && (
+              <div className="distance-info">
+                Distance: {distance.toFixed(2)} km
+              </div>
+            )}
+          </div>
         </form>
       </div>
 
@@ -312,20 +353,6 @@ const NewOrder = () => {
         </form>
 
         <div className="map-container" id="map"></div>
-
-        <div className="price-container">
-          <button className="checkout-button">Checkout</button>
-          {price !== null && (
-            <div className="price-info">
-              Estimated Price: KES {price.toFixed(2)}
-            </div>
-          )}
-          {distance !== null && (
-            <div className="distance-info">
-              Distance: {distance.toFixed(2)} km
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );

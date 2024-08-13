@@ -98,27 +98,51 @@
 }
 
 .price-container {
-  display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin-top: -40px;
+  padding: 20px; /* Add padding for better spacing */
+  border: 2px solid gray; /* Green border color */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background color */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add a subtle shadow */
+  margin-right: 100px;
+  margin-left: 300px;
 }
 
 .price-info,
 .distance-info {
-  color: #81B622;
+  color: gray;
   font-size: 18px;
   margin-right: 10px;
+  font-style: bold;
+  font-weight: 900;
+  line-height: 30px;
 }
 
 .heading {
   color: #65558f;
-  font-weight: 100; /* Corrected font-weight */
+  font-weight: 100; 
   padding-bottom: 30px;
 }
 
 .recipient-header {
   color: #65558f;
-  font-weight: 100; /* Corrected font-weight */
+  font-weight: 100; 
   padding-bottom: 30px;
   padding-top: 20px;
+}
+
+.form-validation-message {
+  color: red;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: grey;
+  background-color: white;
 }
