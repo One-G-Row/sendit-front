@@ -16,19 +16,36 @@ import axios from "axios";
 import { haversineDistance } from "./utils";
 
 const NewOrder = () => {
+  const [map, setMap] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [distance, setDistance] = useState(null);
+  const [responseMessage, setResponseMessage] = useState("");
+  const [postPrice, setPostPrice] = useState({ price });
+
+  const priceValue = Object.values(postPrice);
+  console.log(typeof priceValue);
+  const int = parseInt(priceValue);
+
   const [formData, setFormData] = useState({
     item: "",
     description: "",
     weight: "",
     destination: "",
+    cost: "",
     recipient_name: "",
     recipient_contact: "",
   });
 
-  const [map, setMap] = useState(null);
-  const [price, setPrice] = useState(null);
-  const [distance, setDistance] = useState(null);
-  const [responseMessage, setResponseMessage] = useState("");
+  console.log(formData);
+
+  const [parcelsFormData, setParcelsFormData] = useState({
+    parcel_item: "",
+    parcel_description: "",
+    parcel_weight: "",
+    parcel_cost: "",
+    parcel_status: "",
+    /* destination: "",  */
+  });
 
   useEffect(() => {
     const initialMap = new Map({
@@ -62,6 +79,7 @@ const NewOrder = () => {
     e.preventDefault();
     console.log(formData);
 
+
     const response = await fetch("http://127.0.0.1:5000/myorders", {
       method: "POST",
       headers: {
@@ -71,22 +89,42 @@ const NewOrder = () => {
     });
 
     if (response.ok) {
+      const orderData = await response.json();
       console.log("Order created successfully");
       setResponseMessage("Order created successfully");
+      setPostPrice({ price });
     } else {
       console.error("Failed to create order");
       setResponseMessage("Failed to create order");
     }
 
-    const response2 = await fetch("http://127.0.0.1:5000/parcels", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    }).catch((err) => console.log(err));
-  };
+    /*  const response2 = await fetch("http://127.0.0.1:5000/myorders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postPrice),
+      }); */
 
+    /*  const response2 = await fetch("http://127.0.0.1:5000/parcels", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(parcelsFormData),
+      });
+
+      if (!response2.ok) {
+        throw new Error("Failed to create parcel");
+      }
+      const parcelsData = await response2.json();
+      console.log("Parcel created successfully");
+      setResponseMessage("Parcel created successfully");
+    } catch (error) {
+      console.error(error);
+      setResponseMessage(error.message);
+    } */
+  };
   const handleSearch = async () => {
     const destination = formData.destination;
     console.log("Searching for destination:", destination);
@@ -197,8 +235,12 @@ const NewOrder = () => {
     const basePrice = 500; // Base price in KES
     const weightCost = weight * 100; // 100 KES per kg
     const distanceCost = distance * 50; // 50 KES per km
-    return basePrice + weightCost + distanceCost;
+    const total = basePrice + weightCost + distanceCost;
+    setPostPrice(total);
+    return total;
   };
+
+  console.log(price);
 
   return (
     <div className="new-order-container">
