@@ -5,12 +5,11 @@ import "./AllOrders.css";
 const AllOrders = () => {
   const [parcels, setParcels] = useState([]);
   const [selectedParcel, setSelectedParcel] = useState(null);
-  const [status, setStatus] = useState('');
-  const [destination, setDestination] = useState('');
-  const [error, setError] = useState('');
+  const [status, setStatus] = useState("");
+  const [destination, setDestination] = useState("");
+  const [error, setError] = useState("");
   const [orders, setOrders] = useState("");
-  const [successMessage, setSuccessMessage] = useState('');
-
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     const fetchParcels = async () => {
@@ -28,7 +27,7 @@ const AllOrders = () => {
     };
 
     fetchParcels();
-  }, [selectedParcel]);  // Re-fetch parcels when selectedParcel changes
+  }, [selectedParcel]); // Re-fetch parcels when selectedParcel changes
 
   fetch("http://127.0.0.1:5000/myorders")
     .then((response) => response.json())
@@ -75,7 +74,7 @@ const AllOrders = () => {
           parcels.map((parcel) =>
             parcel.id === updatedData.id ? updatedData : parcel
           )
-        )
+        );
         setParcels((prevParcels) =>
           prevParcels.map((parcel) =>
             parcel.id === updatedData.id ? updatedData : parcel
@@ -86,13 +85,12 @@ const AllOrders = () => {
         setSelectedParcel(null);
 
         // Display success message
-        setSuccessMessage('Parcel updated successfully!');
+        setSuccessMessage("Parcel updated successfully!");
 
         // Clear success message after a few seconds
         setTimeout(() => {
-          setSuccessMessage('');
+          setSuccessMessage("");
         }, 3000); // Adjust the duration as needed
-
       } catch (error) {
         console.error("Error updating parcel:", error);
         setError("Failed to update parcel");
@@ -118,11 +116,13 @@ const AllOrders = () => {
                   <br />
                   Weight: {order.weight}
                   <br />
-                  Cost: {order.cost}
+                  Cost:{" "}
+                  {parcels.find((parcel) => parcel.id === order.id)
+                    ?.parcel_cost || null}
                   <br />
-                  Status: {parcels.find((parcel) => parcel.id === order.id) 
-                  ?.parcel_status || null
-                  }
+                  Status:{" "}
+                  {parcels.find((parcel) => parcel.id === order.id)
+                    ?.parcel_status || null}
                   <br />
                   Destination ID: {order.destination}
                 </Card.Text>
@@ -136,8 +136,9 @@ const AllOrders = () => {
             </Card>
           ))}
       </div>
-      {successMessage && <div className="success-message">{successMessage}</div>}
-
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
 
       {selectedParcel && (
         <div className="update-section">
@@ -157,7 +158,7 @@ const AllOrders = () => {
               <Form.Control
                 type="text"
                 placeholder="Update Destination ID"
-                value={destination}  // Set to the value of selected parcel's destination ID
+                value={destination} // Set to the value of selected parcel's destination ID
                 onChange={(e) => setDestination(e.target.value)}
               />
             </Form.Group>
@@ -167,7 +168,6 @@ const AllOrders = () => {
           </Form>
         </div>
       )}
-
     </div>
   );
 };

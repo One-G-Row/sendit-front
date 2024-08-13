@@ -101,6 +101,7 @@ function MyOrders() {
                 item={order.item}
                 description={order.description}
                 weight={order.weight}
+                cost={order.cost}
                 destination={order.destination}
                 status={
                   parcels.find((parcel) => order.id === parcel.id)
@@ -117,6 +118,7 @@ function MyOrders() {
                 item={order.item}
                 description={order.description}
                 weight={order.weight}
+                cost={order.cost}
                 destination={order.destination}
                 status={
                   parcels.find((parcel) => order.id === parcel.id)

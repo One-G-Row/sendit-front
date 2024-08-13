@@ -21,8 +21,18 @@ const NewOrder = () => {
     description: "",
     weight: "",
     destination: "",
+    cost: "",
     recipient_name: "",
     recipient_contact: "",
+  });
+
+  const [parcelsFormData, setParcelsFormData] = useState({
+    parcel_item: "",
+    parcel_description: "",
+    parcel_weight: "",
+    parcel_cost: "",
+    parcel_status: "",
+    destination: "", 
   });
 
   const [map, setMap] = useState(null);
@@ -62,31 +72,43 @@ const NewOrder = () => {
     e.preventDefault();
     console.log(formData);
 
-    const response = await fetch("http://127.0.0.1:5000/myorders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const response = await fetch("http://127.0.0.1:5000/myorders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (response.ok) {
-      console.log("Order created successfully");
-      setResponseMessage("Order created successfully");
-    } else {
-      console.error("Failed to create order");
-      setResponseMessage("Failed to create order");
+      if (response.ok) {
+        const orderData = await response.json();
+        console.log("Order created successfully");
+        setResponseMessage("Order created successfully");
+      } else {
+        console.error("Failed to create order");
+        setResponseMessage("Failed to create order");
+      }
+
+      const response2 = await fetch("http://127.0.0.1:5000/parcels", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(parcelsFormData),
+      });
+
+      if (!response2.ok) {
+        throw new Error("Failed to create parcel");
+      }
+      const parcelsData = await response2.json();
+      console.log("Parcel created successfully");
+      setResponseMessage("Parcel created successfully");
+    } catch (error) {
+      console.error(error);
+      setResponseMessage(error.message);
     }
-
-    const response2 = await fetch("http://127.0.0.1:5000/parcels", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    }).catch((err) => console.log(err));
   };
-
   const handleSearch = async () => {
     const destination = formData.destination;
     console.log("Searching for destination:", destination);
