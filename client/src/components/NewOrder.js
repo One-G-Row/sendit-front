@@ -276,6 +276,18 @@ const NewOrder = () => {
           >
             Search Destination
           </button>
+          <div className="price-container">
+            {price !== null && (
+              <div className="price-info">
+                Estimated Price: KES {price.toFixed(2)}
+              </div>
+            )}
+            {distance !== null && (
+              <div className="distance-info">
+                Distance: {distance.toFixed(2)} km
+              </div>
+            )}
+          </div>
         </form>
       </div>
 
@@ -308,19 +320,6 @@ const NewOrder = () => {
         </form>
 
         <div className="map-container" id="map"></div>
-
-        <div className="price-container">
-          {price !== null && (
-            <div className="price-info">
-              Estimated Price: KES {price.toFixed(2)}
-            </div>
-          )}
-          {distance !== null && (
-            <div className="distance-info">
-              Distance: {distance.toFixed(2)} km
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
