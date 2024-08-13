@@ -251,13 +251,19 @@ const NewOrder = () => {
           <br />
           <label>
             Destination:
-            <input
-              type="text"
+            <select
               name="destination"
               value={formData.destination}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select a destination</option>
+              <option value="Nairobi">Nairobi</option>
+              <option value="Mombasa">Mombasa</option>
+              <option value="Kisumu">Kisumu</option>
+              <option value="Nakuru">Nakuru</option>
+              <option value="Eldoret">Eldoret</option>
+            </select>
           </label>
           <br />
           <button type="submit" className="submit-button">
@@ -304,7 +310,6 @@ const NewOrder = () => {
         <div className="map-container" id="map"></div>
 
         <div className="price-container">
-          
           {price !== null && (
             <div className="price-info">
               Estimated Price: KES {price.toFixed(2)}
