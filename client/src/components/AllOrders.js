@@ -5,13 +5,13 @@ import "./AllOrders.css";
 const AllOrders = () => {
   const [parcels, setParcels] = useState([]);
   const [selectedParcel, setSelectedParcel] = useState(null);
-  const [status, setStatus] = useState('');
-  const [destination, setDestination] = useState('');
-  const [error, setError] = useState('');
+  const [status, setStatus] = useState("");
+  const [destination, setDestination] = useState("");
+  const [error, setError] = useState("");
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     const fetchParcels = async () => {
@@ -53,10 +53,11 @@ const AllOrders = () => {
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = orders.filter(order =>
-      order.item.toLowerCase().includes(term) ||
-      order.description.toLowerCase().includes(term) ||
-      order.destination.toLowerCase().includes(term)
+    const filtered = orders.filter(
+      (order) =>
+        order.item.toLowerCase().includes(term) ||
+        order.description.toLowerCase().includes(term) ||
+        order.destination.toLowerCase().includes(term)
     );
     setFilteredOrders(filtered);
   };
@@ -89,9 +90,11 @@ const AllOrders = () => {
         }
         const updatedData = await response.json();
 
-        setParcels(parcels.map((parcel) =>
-          parcel.id === updatedData.id ? updatedData : parcel
-        ));
+        setParcels(
+          parcels.map((parcel) =>
+            parcel.id === updatedData.id ? updatedData : parcel
+          )
+        );
 
         // Clear selected parcel to trigger re-render
         setSelectedParcel(null);
@@ -102,7 +105,6 @@ const AllOrders = () => {
         setTimeout(() => {
           setSuccessMessage("");
         }, 3000); // Adjust the duration as needed
-
       } catch (error) {
         console.error("Error updating parcel:", error);
         setError("Failed to update parcel");
@@ -112,15 +114,17 @@ const AllOrders = () => {
 
   const handleCancel = () => {
     setSelectedParcel(null);
-    setStatus('');
-    setDestination('');
+    setStatus("");
+    setDestination("");
   };
 
   return (
     <div className="all-orders">
       <h1>All Orders</h1>
       {error && <div className="error-message">{error}</div>}
-      {successMessage && <div className="success-message">{successMessage}</div>}
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
 
       <Form.Group className="all-orders__search" controlId="search">
         <Form.Control
@@ -135,7 +139,9 @@ const AllOrders = () => {
         {filteredOrders.map((order) => (
           <Card key={order.id} className="all-orders__parcel-card">
             <Card.Body>
-              <Card.Title className="all-orders__card-title">Parcel ID: {order.id}</Card.Title>
+              <Card.Title className="all-orders__card-title">
+                Parcel ID: {order.id}
+              </Card.Title>
               <Card.Subtitle className="all-orders__card-subtitle mb-2 text-muted">
                 Item: {order.item}
               </Card.Subtitle>
@@ -144,9 +150,11 @@ const AllOrders = () => {
                 <br />
                 Weight: {order.weight}
                 <br />
-                Cost: {parcels.find((parcel) => parcel.id === order.id)?.parcel_cost || "N/A"}
+                Cost: {order.cost}
                 <br />
-                Status: {parcels.find((parcel) => parcel.id === order.id)?.parcel_status || "N/A"}
+                Status:{" "}
+                {parcels.find((parcel) => parcel.id === order.id)
+                  ?.parcel_status || "N/A"}
                 <br />
                 Destination: {order.destination}
               </Card.Text>
@@ -164,7 +172,9 @@ const AllOrders = () => {
 
       {selectedParcel && (
         <div className="all-orders__update-section">
-          <h2 className="all-orders__update-title">Update Parcel {selectedParcel.id}</h2>
+          <h2 className="all-orders__update-title">
+            Update Parcel {selectedParcel.id}
+          </h2>
           <Form>
             <Form.Group className="all-orders__form-group">
               <Form.Label>Status</Form.Label>
