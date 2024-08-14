@@ -8,6 +8,7 @@ const LoginUser = () => {
     email: '',
     password: ''
   });
+  
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate(); // Hook for navigation

@@ -20,11 +20,6 @@ const NewOrder = () => {
   const [price, setPrice] = useState(null);
   const [distance, setDistance] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
-  const [postPrice, setPostPrice] = useState({ price });
-
-  /* const priceValue = Object.values(postPrice);
-  console.log(typeof priceValue);
-  const int = parseInt(priceValue); */
 
   const [formData, setFormData] = useState({
     item: "",
@@ -37,7 +32,6 @@ const NewOrder = () => {
   });
 
   console.log(formData);
-
 
   useEffect(() => {
     const initialMap = new Map({
@@ -71,26 +65,29 @@ const NewOrder = () => {
     e.preventDefault();
     console.log(formData);
 
+    const orderData = {
+      ...formData,
+      cost: price !== null ? price.toFixed(2) : formData.cost,
+    };
 
     const response = await fetch("http://127.0.0.1:5000/myorders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(orderData),
     });
 
     if (response.ok) {
       const orderData = await response.json();
       console.log("Order created successfully");
       setResponseMessage("Order created successfully");
-      setPostPrice({ price });
     } else {
       console.error("Failed to create order");
       setResponseMessage("Failed to create order");
     }
-
   };
+
   const handleSearch = async () => {
     const destination = formData.destination;
     console.log("Searching for destination:", destination);
@@ -188,6 +185,11 @@ const NewOrder = () => {
           const weight = parseFloat(formData.weight);
           const calculatedPrice = calculatePrice(weight, distance);
           setPrice(calculatedPrice);
+
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            cost: calculatedPrice.toFixed(2),
+          }));
         }
       } else {
         console.log("No results found for the destination.");
@@ -202,7 +204,6 @@ const NewOrder = () => {
     const weightCost = weight * 100; // 100 KES per kg
     const distanceCost = distance * 50; // 50 KES per km
     const total = basePrice + weightCost + distanceCost;
-    setPostPrice(total);
     return total;
   };
 
@@ -256,9 +257,11 @@ const NewOrder = () => {
             />
           </label>
           <br />
+
           <button type="submit" className="submit-button">
             Submit
           </button>
+
           <button
             type="button"
             onClick={handleSearch}

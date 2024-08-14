@@ -8,6 +8,36 @@ function MyOrders() {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [parcels, setParcels] = useState([]);
 
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/myorders");
+      const orders = await response.json();
+      setMyOrders(orders);
+      setFilteredOrders(orders);
+    } catch (err) {
+      console.log("Fetch my orders error:", err);
+    }
+  };
+
+  const fetchParcels = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/parcels");
+      const data = await response.json();
+      setParcels(data);
+    } catch (err) {
+      console.log("Fetch parcel error:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+    fetchParcels();
+  }, []);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [filteredOrders]);
+
   function filterOrders(e) {
     const input = e.target.value;
     setSearch(input);
@@ -41,18 +71,25 @@ function MyOrders() {
       .catch((err) => console.log("Fetch parcel error:", err));
   }, []);
 
-  function updateDestinations(id, newDestination) {
+  useEffect(() => {
+    fetchOrders();
+    fetchParcels();
+  }, []);
+
+  function updateDestinations(id, newDestination, newCost) {
     fetch(`http://127.0.0.1:5000/myorders/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ destination: newDestination }),
+      body: JSON.stringify({ destination: newDestination, cost: newCost }),
     })
       .then((response) => response.json())
       .then((updatedOrder) => {
         const updatedOrders = myorders.map((order) =>
-          order.id === id ? { ...order, destination: newDestination } : order
+          order.id === id
+            ? { ...order, destination: newDestination, cost: newCost }
+            : order
         );
         setMyOrders(updatedOrders);
         setFilteredOrders(updatedOrders);
