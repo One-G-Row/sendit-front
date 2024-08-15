@@ -27,6 +27,7 @@ const NewOrder = () => {
     weight: "",
     destination: "",
     cost: "",
+    status: "pending",
     recipient_name: "",
     recipient_contact: "",
   });

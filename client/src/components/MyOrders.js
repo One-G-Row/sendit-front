@@ -76,19 +76,19 @@ function MyOrders() {
     fetchParcels();
   }, []);
 
-  function updateDestinations(id, newDestination, newCost) {
+  function updateDestinations(id, newDestination) {
     fetch(`http://127.0.0.1:5000/myorders/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ destination: newDestination, cost: newCost }),
+      body: JSON.stringify({ destination: newDestination}),
     })
       .then((response) => response.json())
       .then((updatedOrder) => {
         const updatedOrders = myorders.map((order) =>
           order.id === id
-            ? { ...order, destination: newDestination, cost: newCost }
+            ? { ...order, destination: newDestination, cost: updatedOrder.cost }
             : order
         );
         setMyOrders(updatedOrders);

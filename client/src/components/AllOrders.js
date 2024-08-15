@@ -16,7 +16,7 @@ const AllOrders = () => {
   useEffect(() => {
     const fetchParcels = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/parcels");
+        const response = await fetch("http://127.0.0.1:5000/myorders");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -62,47 +62,53 @@ const AllOrders = () => {
     setFilteredOrders(filtered);
   };
 
-  const handleParcelSelect = (parcel) => {
-    setSelectedParcel(parcel);
-    setStatus(parcel.parcel_status || "");
-    setDestination(parcel.destination_id || "");
+  const handleParcelSelect = (order) => {
+    setSelectedParcel(order);
+    setStatus(order.status || "");
+    setDestination(order.destination || "");
   };
 
   const handleUpdate = async () => {
     if (selectedParcel) {
       const updatedParcel = {
-        parcel_status: status,
-        destination_id: destination,
+        status: status,
+        destination: destination,
       };
       try {
-        const response = await fetch(
-          `http://127.0.0.1:5000/parcels/${selectedParcel.id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updatedParcel),
-          }
-        );
+        const response = await fetch(`http://127.0.0.1:5000/myorders/${selectedParcel.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedParcel),
+        });
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const updatedData = await response.json();
-
-        setParcels(
-          parcels.map((parcel) =>
-            parcel.id === updatedData.id ? updatedData : parcel
-          )
-        );
+        const fetchOrders = async () => {
+          try {
+            const response = await fetch("http://127.0.0.1:5000/myorders");
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setOrders(data);
+        setFilteredOrders(data);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        setError("Failed to fetch orders");
+      }
+        }
+        fetchOrders();
 
         // Clear selected parcel to trigger re-render
-        setSelectedParcel(null);
+      setSelectedParcel(null);
 
         // Display success message
-        setSuccessMessage("Parcel updated successfully!");
+      setSuccessMessage("Parcel updated successfully!");
 
-        setTimeout(() => {
+      setTimeout(() => {
           setSuccessMessage("");
         }, 3000); // Adjust the duration as needed
       } catch (error) {
@@ -110,8 +116,8 @@ const AllOrders = () => {
         setError("Failed to update parcel");
       }
     }
-  };
-
+  }
+  
   const handleCancel = () => {
     setSelectedParcel(null);
     setStatus("");
@@ -152,9 +158,7 @@ const AllOrders = () => {
                 <br />
                 Cost: {order.cost}
                 <br />
-                Status:{" "}
-                {parcels.find((parcel) => parcel.id === order.id)
-                  ?.parcel_status || "N/A"}
+                Status: {order.status}
                 <br />
                 Destination: {order.destination}
               </Card.Text>
