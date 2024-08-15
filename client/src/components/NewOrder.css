@@ -10,7 +10,7 @@
 
 .form-container h1 {
   margin-bottom: 20px;
-  color: #65558f; /* Matching color for headers */
+  color: #65558f;
 }
 
 .form-container label {
@@ -30,119 +30,45 @@
   font-size: 16px;
 }
 
-.form-container input:focus,
-.form-container textarea:focus {
-  border-color: #81B622;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(129, 182, 34, 0.2);
-}
-
 .submit-button,
-.search-button,
-.checkout-button {
-  background-color: #81B622;
-  color: white;
-  padding: 10px 20px;
+.search-button {
+  padding: 12px 20px;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 8px;
+  color: #fff;
+  background-color: #7f00ff;
   font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
 .submit-button:hover,
-.search-button:hover,
-.checkout-button:hover {
-  background-color: #65558f;
-}
-
-.search-button {
-  margin-left: 10px;
+.search-button:hover {
+  background-color: #5c00b4;
 }
 
 .recipient-details {
   flex: 1;
 }
 
-.recipient-details h2 {
-  color: #65558f;
-  font-weight: bold; /* Make header bold for consistency */
+.recipient-header {
   margin-bottom: 20px;
-}
-
-.recipient-details label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold; /* Consistent with other form labels */
-}
-
-.recipient-details input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-  font-size: 16px;
-}
-
-.recipient-details input:focus {
-  border-color: #81B622;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(129, 182, 34, 0.2);
+  color: #65558f;
 }
 
 .map-container {
   width: 100%;
-  height: 400px;
+  height: 300px; /* Adjust height as needed */
   margin-top: 20px;
 }
 
 .price-container {
-  align-items: center;
-  margin-top: -40px;
-  padding: 20px; /* Add padding for better spacing */
-  border: 2px solid gray; /* Green border color */
-  border-radius: 8px; /* Rounded corners */
-  background-color: #f9f9f9; /* Light background color */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add a subtle shadow */
-  margin-right: 100px;
-  margin-left: 300px;
+  margin-top: 20px;
 }
 
 .price-info,
 .distance-info {
-  color: gray;
   font-size: 18px;
-  margin-right: 10px;
-  font-style: bold;
-  font-weight: 900;
-  line-height: 30px;
-}
-
-.heading {
-  color: #65558f;
-  font-weight: 100; 
-  padding-bottom: 30px;
-}
-
-.recipient-header {
-  color: #65558f;
-  font-weight: 100; 
-  padding-bottom: 30px;
-  padding-top: 20px;
-}
-
-.form-validation-message {
-  color: red;
-}
-
-select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  font-weight: bold;
   margin-bottom: 10px;
-  color: grey;
-  background-color: white;
 }
