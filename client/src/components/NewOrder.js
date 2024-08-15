@@ -31,8 +31,6 @@ const NewOrder = () => {
     recipient_contact: "",
   });
 
-  console.log(formData);
-
   useEffect(() => {
     const initialMap = new Map({
       target: "map",
@@ -63,8 +61,6 @@ const NewOrder = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-
     const orderData = {
       ...formData,
       cost: price !== null ? price.toFixed(2) : formData.cost,
@@ -80,17 +76,14 @@ const NewOrder = () => {
 
     if (response.ok) {
       const orderData = await response.json();
-      console.log("Order created successfully");
       setResponseMessage("Order created successfully");
     } else {
-      console.error("Failed to create order");
       setResponseMessage("Failed to create order");
     }
   };
 
   const handleSearch = async () => {
     const destination = formData.destination;
-    console.log("Searching for destination:", destination);
 
     try {
       const response = await axios.get(
@@ -99,20 +92,17 @@ const NewOrder = () => {
       if (response.data.length > 0) {
         const place = response.data[0];
         const coordinates = [parseFloat(place.lon), parseFloat(place.lat)];
-        console.log("Setting map view to coordinates:", coordinates);
 
         if (map) {
           map.getView().setCenter(fromLonLat(coordinates));
-          map.getView().setZoom(10); // Adjust zoom level as needed
+          map.getView().setZoom(10);
 
-          // Clear existing layers
           map.getLayers().forEach((layer) => {
             if (layer instanceof VectorLayer) {
               map.removeLayer(layer);
             }
           });
 
-          // Create the feature for the line
           const lineFeature = new Feature({
             geometry: new OLLineString([
               fromLonLat([36.8219, -1.2921]),
@@ -120,15 +110,13 @@ const NewOrder = () => {
             ]),
           });
 
-          // Create the line style
           const lineStyle = new Style({
             stroke: new Stroke({
-              color: "#4B0082", // Darker purple for the line
+              color: "#4B0082",
               width: 4,
             }),
           });
 
-          // Apply the line style
           lineFeature.setStyle(lineStyle);
 
           const vectorSource = new VectorSource({
@@ -142,18 +130,18 @@ const NewOrder = () => {
           map.addLayer(vectorLayer);
 
           const originMarker = new Feature({
-            geometry: new CircleGeom(fromLonLat([36.8219, -1.2921]), 5000), // Adjust radius if needed
+            geometry: new CircleGeom(fromLonLat([36.8219, -1.2921]), 5000),
           });
 
           const destinationMarker = new Feature({
-            geometry: new CircleGeom(fromLonLat(coordinates), 5000), // Adjust radius if needed
+            geometry: new CircleGeom(fromLonLat(coordinates), 5000),
           });
 
           originMarker.setStyle(
             new Style({
               image: new CircleStyle({
-                radius: 12, // Adjust marker size
-                fill: new Fill({ color: "#7F00FF" }), // Purple
+                radius: 12,
+                fill: new Fill({ color: "#7F00FF" }),
                 stroke: new Stroke({ color: "#000000", width: 2 }),
               }),
             })
@@ -162,8 +150,8 @@ const NewOrder = () => {
           destinationMarker.setStyle(
             new Style({
               image: new CircleStyle({
-                radius: 12, // Adjust marker size
-                fill: new Fill({ color: "#7F00FF" }), // Purple
+                radius: 12,
+                fill: new Fill({ color: "#7F00FF" }),
                 stroke: new Stroke({ color: "#000000", width: 2 }),
               }),
             })
@@ -200,14 +188,12 @@ const NewOrder = () => {
   };
 
   const calculatePrice = (weight, distance) => {
-    const basePrice = 500; // Base price in KES
-    const weightCost = weight * 100; // 100 KES per kg
-    const distanceCost = distance * 50; // 50 KES per km
+    const basePrice = 500;
+    const weightCost = weight * 100;
+    const distanceCost = distance * 50;
     const total = basePrice + weightCost + distanceCost;
     return total;
   };
-
-  console.log(price);
 
   return (
     <div className="new-order-container">
@@ -303,7 +289,6 @@ const NewOrder = () => {
         <div className="map-container" id="map"></div>
 
         <div className="price-container">
-          <button className="checkout-button">Checkout</button>
           {price !== null && (
             <div className="price-info">
               Estimated Price: KES {price.toFixed(2)}
