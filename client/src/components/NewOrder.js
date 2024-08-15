@@ -14,6 +14,7 @@ import { Circle as CircleGeom } from "ol/geom"; // Ensure Circle is imported cor
 import "ol/ol.css";
 import axios from "axios";
 import { haversineDistance } from "./utils";
+import { useNavigate } from "react-router-dom";
 
 const NewOrder = () => {
   const [map, setMap] = useState(null);
@@ -21,6 +22,8 @@ const NewOrder = () => {
   const [distance, setDistance] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
 
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     item: "",
     description: "",
@@ -78,6 +81,7 @@ const NewOrder = () => {
     if (response.ok) {
       const orderData = await response.json();
       setResponseMessage("Order created successfully");
+      navigate("/myorders");
     } else {
       setResponseMessage("Failed to create order");
     }
