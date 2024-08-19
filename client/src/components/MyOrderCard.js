@@ -55,7 +55,7 @@ function MyOrdersCard({
       </p>
       <p>Cost: {cost}</p>
       <p>Status: {status}</p>
-      {status === "Pending" &&
+      {status &&
         (edit ? (
           <div>
             <button onClick={handleSave}>Save</button>
