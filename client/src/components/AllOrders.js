@@ -3,33 +3,14 @@ import { Card, Button, Form } from "react-bootstrap";
 import "./AllOrders.css";
 
 const AllOrders = () => {
-  const [parcels, setParcels] = useState([]);
-  const [selectedParcel, setSelectedParcel] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [status, setStatus] = useState("");
   const [destination, setDestination] = useState("");
   const [error, setError] = useState("");
-  const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
-  useEffect(() => {
-    const fetchParcels = async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:5000/myorders");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setParcels(data);
-      } catch (error) {
-        console.error("Error fetching parcels:", error);
-        setError("Failed to fetch parcels");
-      }
-    };
-
-    fetchParcels();
-  }, [selectedParcel]); // Re-fetch parcels when selectedParcel changes
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -62,64 +43,61 @@ const AllOrders = () => {
     setFilteredOrders(filtered);
   };
 
-  const handleParcelSelect = (order) => {
-    setSelectedParcel(order);
+  const handleOrderSelect = (order) => {
+    setSelectedOrder(order);
     setStatus(order.status || "");
     setDestination(order.destination || "");
   };
 
   const handleUpdate = async () => {
-    if (selectedParcel) {
-      const updatedParcel = {
-        status: status,
-        destination: destination,
+    if (selectedOrder) {
+      const updatedOrder = {
+        ...selectedOrder,
+        status,
+        destination,
       };
+
       try {
-        const response = await fetch(`http://127.0.0.1:5000/myorders/${selectedParcel.id}`, {
+        const response = await fetch(`http://127.0.0.1:5000/myorders/${selectedOrder.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(updatedParcel),
+          body: JSON.stringify(updatedOrder),
         });
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        const updatedData = await response.json();
-        const fetchOrders = async () => {
-          try {
-            const response = await fetch("http://127.0.0.1:5000/myorders");
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
+
         const data = await response.json();
-        setOrders(data);
-        setFilteredOrders(data);
+        setOrders(
+          orders.map((order) =>
+            order.id === selectedOrder.id ? data : order
+          )
+        );
+        setFilteredOrders(
+          filteredOrders.map((order) =>
+            order.id === selectedOrder.id ? data : order
+          )
+        );
+        setSuccessMessage("Order updated successfully!");
       } catch (error) {
-        console.error("Error fetching orders:", error);
-        setError("Failed to fetch orders");
+        console.error("Error updating order:", error);
+        setError("Failed to update order");
       }
-        }
-        fetchOrders();
 
-        // Clear selected parcel to trigger re-render
-      setSelectedParcel(null);
-
-        // Display success message
-      setSuccessMessage("Parcel updated successfully!");
-
+      setSelectedOrder(null);
+      setStatus("");
+      setDestination("");
       setTimeout(() => {
-          setSuccessMessage("");
-        }, 3000); // Adjust the duration as needed
-      } catch (error) {
-        console.error("Error updating parcel:", error);
-        setError("Failed to update parcel");
-      }
+        setSuccessMessage("");
+      }, 3000);
     }
   }
   
   const handleCancel = () => {
-    setSelectedParcel(null);
+    setSelectedOrder(null);
     setStatus("");
     setDestination("");
   };
@@ -143,10 +121,10 @@ const AllOrders = () => {
 
       <div className="all-orders__card-container">
         {filteredOrders.map((order) => (
-          <Card key={order.id} className="all-orders__parcel-card">
+          <Card key={order.id} className="all-orders__order-card">
             <Card.Body>
               <Card.Title className="all-orders__card-title">
-                Parcel ID: {order.id}
+                Order ID: {order.id}
               </Card.Title>
               <Card.Subtitle className="all-orders__card-subtitle mb-2 text-muted">
                 Item: {order.item}
@@ -158,43 +136,45 @@ const AllOrders = () => {
                 <br />
                 Cost: {order.cost}
                 <br />
-                Status: {order.status}
+                Status: {order.status || "Pending"}
                 <br />
                 Destination: {order.destination}
               </Card.Text>
               <Button
                 variant="primary"
-                onClick={() => handleParcelSelect(order)}
+                onClick={() => handleOrderSelect(order)}
                 className="all-orders__select-button"
               >
-                Select Parcel
+                Select Order
               </Button>
             </Card.Body>
           </Card>
         ))}
       </div>
 
-      {selectedParcel && (
+      {selectedOrder && (
         <div className="all-orders__update-section">
           <h2 className="all-orders__update-title">
-            Update Parcel {selectedParcel.id}
+            Update Order {selectedOrder.id}
           </h2>
           <Form>
             <Form.Group className="all-orders__form-group">
               <Form.Label>Status</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Update Status"
+              <Form.Select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
                 className="all-orders__form-control"
-              />
+              >
+                <option value="Pending">Pending</option>
+                <option value="Shipped">Shipped</option>
+                <option value="On Route">On Route</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group className="all-orders__form-group">
-              <Form.Label>Destination ID</Form.Label>
+              <Form.Label>Destination</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Update Destination ID"
+                placeholder="Update Destination"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
                 className="all-orders__form-control"
@@ -206,7 +186,7 @@ const AllOrders = () => {
                 onClick={handleUpdate}
                 className="all-orders__update-button"
               >
-                Update Parcel
+                Update Order
               </Button>
               <Button
                 variant="secondary"

@@ -13,6 +13,7 @@ import MapComponent from "./MapComponent";
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
 
+
 function App() {
   return (
     <AuthProvider>

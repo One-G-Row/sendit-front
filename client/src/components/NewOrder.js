@@ -30,7 +30,7 @@ const NewOrder = () => {
     weight: "",
     destination: "",
     cost: "",
-    status: "pending",
+    status: "",
     recipient_name: "",
     recipient_contact: "",
   });
