@@ -16,6 +16,8 @@ import axios from "axios";
 import { haversineDistance } from "./utils";
 import { useNavigate } from "react-router-dom";
 
+const API = process.env.REACT_APP_SERVER_API;
+
 const NewOrder = () => {
   const [map, setMap] = useState(null);
   const [price, setPrice] = useState(null);
@@ -23,7 +25,7 @@ const NewOrder = () => {
   const [responseMessage, setResponseMessage] = useState("");
 
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     item: "",
     description: "",
@@ -70,12 +72,13 @@ const NewOrder = () => {
       cost: price !== null ? price.toFixed(2) : formData.cost,
     };
 
-    const response = await fetch("http://127.0.0.1:5000/myorders", {
+    const response = await fetch(`${API}/myorders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(orderData),
+      credentials: "include",
     });
 
     if (response.ok) {

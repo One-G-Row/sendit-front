@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Form } from "react-bootstrap";
 import "./AllOrders.css";
 
+const API = process.env.REACT_APP_SERVER_API;
+
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -15,7 +17,10 @@ const AllOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/myorders");
+        const response = await fetch(`${API}/myorders`, {
+          method: "GET",
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -58,12 +63,13 @@ const AllOrders = () => {
       };
 
       try {
-        const response = await fetch(`http://127.0.0.1:5000/myorders/${selectedOrder.id}`, {
+        const response = await fetch(`${API}/myorders/${selectedOrder.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(updatedOrder),
+          credentials: "include",
         });
 
         if (!response.ok) {
@@ -72,9 +78,7 @@ const AllOrders = () => {
 
         const data = await response.json();
         setOrders(
-          orders.map((order) =>
-            order.id === selectedOrder.id ? data : order
-          )
+          orders.map((order) => (order.id === selectedOrder.id ? data : order))
         );
         setFilteredOrders(
           filteredOrders.map((order) =>
@@ -94,8 +98,8 @@ const AllOrders = () => {
         setSuccessMessage("");
       }, 3000);
     }
-  }
-  
+  };
+
   const handleCancel = () => {
     setSelectedOrder(null);
     setStatus("");

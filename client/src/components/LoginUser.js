@@ -1,56 +1,58 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
-import './LoginUser.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import "./LoginUser.css";
+
+const API = process.env.REACT_APP_SERVER_API;
 
 const LoginUser = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
-  
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate(); // Hook for navigation
   const { login } = useAuth(); // Use Auth context
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
       // Make API request to login
-      const response = await fetch('http://127.0.0.1:5000/loginuser', {
-        method: 'POST',
+      const response = await fetch(`${API}/loginuser`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
 
       if (!response.ok) {
         // Handle errors
         const errorData = await response.json();
-        setError(errorData.error || 'An error occurred');
+        setError(errorData.error || "An error occurred");
         return;
       }
 
       // Handle success
       const data = await response.json();
-      login({ token: data.access_token, role: 'user' }); // Set user in context and local storage
-      setSuccess('Logged in successfully!');
-      navigate('/myorders'); // Redirect to the My Orders page
-
+      login({ token: data.access_token, role: "user" }); // Set user in context and local storage
+      setSuccess("Logged in successfully!");
+      navigate("/myorders"); // Redirect to the My Orders page
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError("An unexpected error occurred");
       console.error(err);
     }
   };
@@ -62,7 +64,9 @@ const LoginUser = () => {
       {success && <p className="success-message">{success}</p>}
       <form onSubmit={handleSubmit} className="login-form">
         <div className="login-form-group">
-          <label htmlFor="email" className="login-label">Email</label>
+          <label htmlFor="email" className="login-label">
+            Email
+          </label>
           <input
             type="email"
             id="email"
@@ -74,7 +78,9 @@ const LoginUser = () => {
           />
         </div>
         <div className="login-form-group">
-          <label htmlFor="password" className="login-label">Password</label>
+          <label htmlFor="password" className="login-label">
+            Password
+          </label>
           <input
             type="password"
             id="password"
@@ -85,7 +91,9 @@ const LoginUser = () => {
             required
           />
         </div>
-        <button type="submit" className="login-button">Login</button>
+        <button type="submit" className="login-button">
+          Login
+        </button>
       </form>
     </div>
   );

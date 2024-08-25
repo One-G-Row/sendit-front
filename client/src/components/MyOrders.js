@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MyOrdersCard from "./MyOrderCard";
 
+const API = process.env.REACT_APP_SERVER_API;
+
 function MyOrders() {
   const [myorders, setMyOrders] = useState([]);
   const [search, setSearch] = useState("");
@@ -12,7 +14,10 @@ function MyOrders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/myorders");
+        const response = await fetch(`${API}/myorders`, {
+          method: "GET",
+          credentials: "include",
+        });
         const orders = await response.json();
         setMyOrders(orders);
         setFilteredOrders(orders);
@@ -23,7 +28,10 @@ function MyOrders() {
 
     const fetchParcels = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/parcels");
+        const response = await fetch(`${API}/parcels`, {
+          method: "GET",
+          credentials: "include",
+        });
         const data = await response.json();
         setParcels(data);
       } catch (err) {
@@ -47,18 +55,19 @@ function MyOrders() {
   }, [search, myorders]);
 
   function updateDestinations(id, newDestination) {
-    fetch(`http://127.0.0.1:5000/myorders/${id}`, {
+    fetch(`${API}/myorders/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ destination: newDestination,}),
+      body: JSON.stringify({ destination: newDestination }),
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((updatedOrder) => {
         const updatedOrders = myorders.map((order) =>
           order.id === id
-            ? { ...order, destination: newDestination, cost: updatedOrder.cost}
+            ? { ...order, destination: newDestination, cost: updatedOrder.cost }
             : order
         );
         setMyOrders(updatedOrders);
@@ -68,8 +77,9 @@ function MyOrders() {
   }
 
   function removeOrder(id) {
-    fetch(`http://127.0.0.1:5000/myorders/${id}`, {
+    fetch(`${API}/myorders/${id}`, {
       method: "DELETE",
+      credentials: "include",
     })
       .then((response) => {
         if (!response.ok) {
@@ -110,33 +120,28 @@ function MyOrders() {
                 weight={order.weight}
                 cost={order.cost}
                 destination={order.destination}
-                status={
-                  order?.status || "Pending"
-                }
-                
+                status={order?.status || "Pending"}
                 removeOrder={() => removeOrder(order.id)}
                 updateDestinations={updateDestinations}
               />
             ))
           : myorders.map((order) => (
-            <MyOrdersCard
-              key={order.id}
-              id={order.id}
-              item={order.item}
-              description={order.description}
-              weight={order.weight}
-              cost={order.cost}
-              destination={order.destination}
-              status={order.status}
-              removeOrder={() => removeOrder(order.id)}
-              updateDestinations={updateDestinations}
-            />
-          ))}
+              <MyOrdersCard
+                key={order.id}
+                id={order.id}
+                item={order.item}
+                description={order.description}
+                weight={order.weight}
+                cost={order.cost}
+                destination={order.destination}
+                status={order.status}
+                removeOrder={() => removeOrder(order.id)}
+                updateDestinations={updateDestinations}
+              />
+            ))}
       </div>
     </div>
   );
 }
 
 export default MyOrders;
- 
-

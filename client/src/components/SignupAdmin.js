@@ -1,50 +1,53 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import './SignupAdmin.css';
+import { useNavigate } from "react-router-dom";
+import "./SignupAdmin.css";
+
+const API = process.env.REACT_APP_SERVER_API;
 
 const AdminRegister = () => {
   const [formData, setFormData] = useState({
-    first_name: '',  // Updated to match server-side field names
-    last_name: '',   // Updated to match server-side field names
-    email: '',
-    password: ''
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/admin/register', {
-        method: 'POST',
+      const response = await fetch(`${API}/admin/register`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
 
       const data = await response.json();
       if (response.ok) {
-        setSuccess('Admin registered successfully!');
+        setSuccess("Admin registered successfully!");
         setTimeout(() => {
-          navigate('/loginadmin');  // Redirect to login page after 2 seconds
+          navigate("/loginadmin"); 
         }, 2000);
       } else {
-        setError(data.message || 'An error occurred');
+        setError(data.message || "An error occurred");
       }
     } catch (err) {
-      setError('An error occurred while registering the admin.');
+      setError("An error occurred while registering the admin.");
     }
   };
 
@@ -55,31 +58,37 @@ const AdminRegister = () => {
       {success && <p className="success-message">{success}</p>}
       <form onSubmit={handleSubmit} className="register-form">
         <div className="register-form-group">
-          <label htmlFor="first_name" className="register-label">First Name</label>
+          <label htmlFor="first_name" className="register-label">
+            First Name
+          </label>
           <input
             type="text"
             id="first_name"
-            name="first_name"  // Updated to match server-side field names
-            value={formData.first_name}  // Updated to match server-side field names
+            name="first_name" // Updated to match server-side field names
+            value={formData.first_name} // Updated to match server-side field names
             onChange={handleChange}
             className="register-input"
             required
           />
         </div>
         <div className="register-form-group">
-          <label htmlFor="last_name" className="register-label">Last Name</label>
+          <label htmlFor="last_name" className="register-label">
+            Last Name
+          </label>
           <input
             type="text"
             id="last_name"
-            name="last_name"  // Updated to match server-side field names
-            value={formData.last_name}  // Updated to match server-side field names
+            name="last_name" // Updated to match server-side field names
+            value={formData.last_name} // Updated to match server-side field names
             onChange={handleChange}
             className="register-input"
             required
           />
         </div>
         <div className="register-form-group">
-          <label htmlFor="email" className="register-label">Email</label>
+          <label htmlFor="email" className="register-label">
+            Email
+          </label>
           <input
             type="email"
             id="email"
@@ -91,7 +100,9 @@ const AdminRegister = () => {
           />
         </div>
         <div className="register-form-group">
-          <label htmlFor="password" className="register-label">Password</label>
+          <label htmlFor="password" className="register-label">
+            Password
+          </label>
           <input
             type="password"
             id="password"
@@ -102,7 +113,9 @@ const AdminRegister = () => {
             required
           />
         </div>
-        <button type="submit" className="register-button">Register</button>
+        <button type="submit" className="register-button">
+          Register
+        </button>
       </form>
     </div>
   );
