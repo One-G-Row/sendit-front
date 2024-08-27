@@ -16,15 +16,14 @@ import axios from "axios";
 import { haversineDistance } from "./utils";
 import { useNavigate } from "react-router-dom";
 
-const API = process.env.REACT_APP_SERVER_API;
-
-console.log(API);
 
 const NewOrder = () => {
   const [map, setMap] = useState(null);
   const [price, setPrice] = useState(null);
   const [distance, setDistance] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
+
+  const API = process.env.REACT_APP_SERVER_API;
 
   const navigate = useNavigate();
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MyOrdersCard from "./MyOrderCard";
 
-const API = process.env.REACT_APP_SERVER_API;
+
 
 function MyOrders() {
   const [myorders, setMyOrders] = useState([]);
@@ -10,7 +10,10 @@ function MyOrders() {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [parcels, setParcels] = useState([]);
 
-  // Fetch orders once when the component mounts
+  const API = process.env.REACT_APP_SERVER_API;
+  console.log(API)
+
+  
   useEffect(() => {
     const fetchOrders = async () => {
       try {
