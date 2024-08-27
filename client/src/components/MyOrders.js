@@ -41,7 +41,7 @@ function MyOrders() {
 
     fetchOrders();
     fetchParcels();
-  });
+  }, []);
 
   // Update filtered orders when the search input changes
   useEffect(() => {
