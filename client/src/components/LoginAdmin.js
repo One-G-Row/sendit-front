@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import "./LoginAdmin.css";
 
-const API = process.env.REACT_APP_SERVER;
+const API = process.env.REACT_APP_SERVER_API;
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
