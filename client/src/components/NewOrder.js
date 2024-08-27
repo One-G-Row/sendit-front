@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 
 const API = process.env.REACT_APP_SERVER_API;
 
+console.log(API);
+
 const NewOrder = () => {
   const [map, setMap] = useState(null);
   const [price, setPrice] = useState(null);
@@ -82,7 +84,7 @@ const NewOrder = () => {
     });
 
     if (response.ok) {
-      const orderData = await response.json();
+      /* const orderData = await response.json(); */
       setResponseMessage("Order created successfully");
       navigate("/myorders");
     } else {
