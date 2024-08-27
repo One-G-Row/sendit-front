@@ -122,7 +122,7 @@ button {
   color: #4b0082;
   border: 2px solid #32cd32;
   transition: background-color 0.3s ease;
-  height: 40px;
+  height: 60px;
 }
 
 .change-destination:hover {
@@ -189,7 +189,7 @@ button {
   background-color: #4b0082;
   color: #fff;
   font-weight: bold;
-  height: 40px;
+  height: 60px;
 }
 
 .cancel-order:hover {
