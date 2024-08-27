@@ -28,7 +28,7 @@ const AdminLogin = () => {
     setSuccess("");
 
     try {
-      const response = await fetch(`${API}/admin/login`, {
+      const response = await fetch(`${API}/loginadmin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
