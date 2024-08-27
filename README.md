@@ -3,7 +3,7 @@
 ```markdown
 # SENDIT Frontend
 
-The frontend of SENDIT is built with React.js and provides a user-friendly interface for managing parcel deliveries.
+The front end of SENDIT is built with React.js and provides a user-friendly interface for managing parcel deliveries.
 
 ## Features
 - User registration and login
@@ -14,23 +14,28 @@ The frontend of SENDIT is built with React.js and provides a user-friendly inter
 - **React.js**
 - **Redux Toolkit**
 - **OpenLayers**
-- **Axios**
+- **Axios**s
 
-## Getting Started
+##Deployed Application
+### Getting Started
 
+-**Client Application**(https://sendit-front.onrender.com)
+-**Server Application**(https://sendit-back-u9s1.onrender.com)
+
+##Alternative approach if you want to run the app locally
 ### Installation
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Chalo101/sendIT-group-3-client.git
-   cd sendIT-group-3-client
+   git clone https://github.com/One-G-Row/sendit-front.git
+   cd sendit-front
+
 npm install
 npm start
 Visit http://localhost:3000/ to view the app.
 
 
----
 
-This README file provides concise yet comprehensive guidance on setting up, running, and understanding the SENDIT project. It also gives a brief overview of what the app does and the technologies involved.
+
 
 
 
