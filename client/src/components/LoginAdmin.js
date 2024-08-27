@@ -13,7 +13,7 @@ const AdminLogin = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth(); // Use Auth context
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -28,7 +28,7 @@ const AdminLogin = () => {
     setSuccess("");
 
     try {
-      const response = await fetch(`${API}/admin/login`, {
+      const response = await fetch(`${API}/loginadmin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,11 +43,10 @@ const AdminLogin = () => {
         return;
       }
 
-      // Handle success
       const data = await response.json();
-      login({ token: data.access_token, role: "admin" }); // Set user in context and local storage
+      login({ token: data.access_token, role: "admin" });
       setSuccess("Login successful!");
-      navigate("/allorders"); // Redirect to the All Orders page
+      navigate("/allorders");
     } catch (err) {
       setError("An unexpected error occurred");
       console.error(err);
