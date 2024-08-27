@@ -16,7 +16,6 @@ import axios from "axios";
 import { haversineDistance } from "./utils";
 import { useNavigate } from "react-router-dom";
 
-
 const NewOrder = () => {
   const [map, setMap] = useState(null);
   const [price, setPrice] = useState(null);
@@ -24,6 +23,8 @@ const NewOrder = () => {
   const [responseMessage, setResponseMessage] = useState("");
 
   const API = process.env.REACT_APP_SERVER_API;
+
+  console.log(price);
 
   const navigate = useNavigate();
 
@@ -70,7 +71,7 @@ const NewOrder = () => {
     e.preventDefault();
     const orderData = {
       ...formData,
-      cost: price !== null ? price.toFixed(2) : formData.cost,
+      cost: price !== null ? Math.round(price) : parseInt(formData.cost, 10),
     };
 
     const response = await fetch(`${API}/myorders`, {
@@ -203,6 +204,8 @@ const NewOrder = () => {
     const total = basePrice + weightCost + distanceCost;
     return total;
   };
+
+  console.log(typeof formData.cost);
 
   return (
     <div className="new-order-container">

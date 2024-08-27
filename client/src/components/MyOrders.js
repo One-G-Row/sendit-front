@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MyOrdersCard from "./MyOrderCard";
 
-
-
 function MyOrders() {
   const [myorders, setMyOrders] = useState([]);
   const [search, setSearch] = useState("");
@@ -11,9 +9,8 @@ function MyOrders() {
   const [parcels, setParcels] = useState([]);
 
   const API = process.env.REACT_APP_SERVER_API;
-  console.log(API)
+  console.log(API);
 
-  
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -44,7 +41,7 @@ function MyOrders() {
 
     fetchOrders();
     fetchParcels();
-  }, []);
+  });
 
   // Update filtered orders when the search input changes
   useEffect(() => {
